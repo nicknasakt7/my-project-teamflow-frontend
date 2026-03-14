@@ -17,9 +17,9 @@ export default function ActivityItem({
     .toUpperCase();
 
   return (
-    <div className="flex gap-3 rounded-lg p-2 transition hover:bg-muted/40">
+    <div className="flex gap-3 rounded-lg p-2 transition border-b-2 hover:bg-muted">
       {/* Avatar */}
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-semibold">
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary text-lg font-semibold">
         {initials}
       </div>
 
@@ -27,7 +27,7 @@ export default function ActivityItem({
       <div className="text-sm leading-snug">
         <p>{message}</p>
 
-        <p className="text-xs text-muted-foreground">
+        <p className="text-md text-muted-foreground">
           {formatDistanceToNow(new Date(createdAt), {
             addSuffix: true,
           })}

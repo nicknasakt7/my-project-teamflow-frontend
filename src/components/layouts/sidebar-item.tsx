@@ -22,8 +22,8 @@ export default function SidebarItem({
       className={cn(
         'flex items-center gap-4 px-4 py-3 rounded-lg cursor-pointer text-lg transition',
         isActive
-          ? 'bg-card text-foreground font-medium'
-          : 'text-foreground hover:bg-card',
+          ? 'bg-card text-foreground font-bold'
+          : 'text-foreground hover:bg-card font-medium',
       )}
     >
       <Icon className="size-5" />

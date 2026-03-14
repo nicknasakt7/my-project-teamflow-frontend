@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, ClipboardList, Plus, UserPlus } from 'lucide-react';
+import { AlertTriangle, Plus, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 
 export default function QuickOperations() {
@@ -23,13 +23,7 @@ export default function QuickOperations() {
 
         <Button
           variant="outline"
-          className="w-full justify-center gap-2 h-11 text-md"
-          asChild
-        ></Button>
-
-        <Button
-          variant="outline"
-          className="w-full justify-center h-11 gap-2 text-md"
+          className="w-full justify-center h-11 gap-2 text-md transition-all duration-200 hover:-translate-y-0.5"
           asChild
         >
           <Link href="/employees/create">
@@ -42,7 +36,7 @@ export default function QuickOperations() {
           variant="destructive"
           className="w-full justify-center h-11 gap-2 text-md transition-all duration-400
   hover:scale-105 hover:shadow-xl
-  relative 
+  relative overflow-hidden
   before:absolute before:inset-0
   before:bg-linear-to-r
   before:from-transparent before:via-white/40 before:to-transparent

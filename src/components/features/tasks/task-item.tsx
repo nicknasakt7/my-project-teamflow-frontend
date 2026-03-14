@@ -1,4 +1,9 @@
-import { CalendarDays } from 'lucide-react';
+import {
+  CalendarDays,
+  Check,
+  MessageCircleMore,
+  SquareCheck,
+} from 'lucide-react';
 
 export type TaskItemProps = {
   id: number;
@@ -17,9 +22,9 @@ const statusStyles: Record<TaskItemProps['status'], string> = {
   Done: 'bg-green-100 text-green-600',
 };
 const priorityStyles: Record<TaskItemProps['priority'], string> = {
-  High: 'text-red-500',
-  Medium: 'text-yellow-500',
-  Low: 'text-green-500',
+  High: 'text-destructive',
+  Medium: 'text-chart-1',
+  Low: 'text-chart-2',
 };
 
 export default function TaskItem({
@@ -31,16 +36,19 @@ export default function TaskItem({
   comments,
 }: TaskItemProps) {
   return (
-    <div className="flex items-start justify-between rounded-lg border p-4">
+    <div className="flex items-start justify-between rounded-lg border border-secondary p-4">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
-          <h3 className="font-medium">{title}</h3>
+          <div className="flex gap-2">
+            <SquareCheck className="size-8" />
+            <h3 className="font-medium text-xl">{title}</h3>
+          </div>
 
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-md text-muted-foreground">{description}</p>
         </div>
 
         {/* META */}
-        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+        <div className="flex items-center gap-3 text-md text-muted-foreground">
           <div className="flex items-center gap-1">
             <CalendarDays className="size-4" />
             {dueDate}
@@ -49,7 +57,9 @@ export default function TaskItem({
           <span className={priorityStyles[priority]}>• {priority}</span>
 
           {comments && (
-            <span className="text-sm text-gray-500">💬 {comments}</span>
+            <span className="flex gap-1 text-md text-gray-500">
+              <MessageCircleMore /> {comments}
+            </span>
           )}
         </div>
       </div>
