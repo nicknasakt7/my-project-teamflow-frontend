@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
 import Link from 'next/link';
 
 export default function TasksLayout({
@@ -9,14 +7,8 @@ export default function TasksLayout({
 }) {
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-semibold">Tasks</h1>
-      {/* 
-      <Button className="flex gap-4 w-40 text-lg" asChild>
-        <Link href="/tasks/create">
-          <Plus />
-          Create Task
-        </Link>
-      </Button> */}
+      <h1 className="text-4xl font-semibold">All Tasks</h1>
+
       <div className="grid grid-cols-2 gap-6 justify-center items-center">
         <button className="bg-chart-1 text-xl text-card font-bold px-4 py-2 rounded-lg">
           <Link href="/tasks">Assigned</Link>

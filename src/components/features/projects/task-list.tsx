@@ -1,8 +1,10 @@
 import { CardContent } from '@/components/ui/card';
-import TaskItem from '../tasks/task-item';
-import { tasks } from '@/components/mocks/mock-data';
+import TaskItem, { TaskItemProps } from '../tasks/task-item';
 
-export default function TaskList() {
+export type TaskListProps = {
+  tasks: TaskItemProps[];
+};
+export default function TaskList({ tasks }: TaskListProps) {
   return (
     <CardContent className="flex flex-col gap-4">
       {tasks.map(task => (

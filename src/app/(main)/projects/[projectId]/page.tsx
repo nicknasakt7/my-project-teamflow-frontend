@@ -2,7 +2,8 @@ import TeamMembers from '@/components/features/employees/team-member';
 
 import ProjectHeader from '@/components/features/projects/project-header';
 import ProjectProgress from '@/components/features/projects/project-progress-bar';
-import TaskList from '@/components/features/projects/task-list-card';
+import TaskList from '@/components/features/projects/task-list';
+import { tasks } from '@/components/mocks/mock-data';
 
 export default function ProjectDetailPage({}: PageProps<'/projects/[projectId]'>) {
   return (
@@ -13,7 +14,7 @@ export default function ProjectDetailPage({}: PageProps<'/projects/[projectId]'>
 
       <div className="grid grid-cols-3 gap-6">
         <div className="col-span-2">
-          <TaskList />
+          <TaskList tasks={tasks} />
         </div>
 
         <div>

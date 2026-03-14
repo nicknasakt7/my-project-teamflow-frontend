@@ -6,16 +6,20 @@ export type TaskItemProps = {
   description: string;
   status: 'Todo' | 'In progress' | 'In review' | 'Done';
   dueDate: string;
-  priority: string;
+  priority: 'High' | 'Medium' | 'Low';
   comments: number;
 };
 
-const statusStyles: Record<string, string> = {
-  Todo: 'bg-[var(--status-todo-bg)] text-[var(--status-todo-text)]',
-  'In Progress':
-    'bg-[var(--status-progress-bg)] text-[var(--status-progress-text)]',
-  'In Review': 'bg-[var(--status-review-bg)] text-[var(--status-review-text)]',
-  Done: 'bg-[var(--status-done-bg)] text-[var(--status-done-text)]',
+const statusStyles: Record<TaskItemProps['status'], string> = {
+  Todo: 'bg-gray-100 text-gray-600',
+  'In progress': 'bg-blue-100 text-blue-600',
+  'In review': 'bg-yellow-100 text-yellow-700',
+  Done: 'bg-green-100 text-green-600',
+};
+const priorityStyles: Record<TaskItemProps['priority'], string> = {
+  High: 'text-red-500',
+  Medium: 'text-yellow-500',
+  Low: 'text-green-500',
 };
 
 export default function TaskItem({
@@ -42,13 +46,11 @@ export default function TaskItem({
             {dueDate}
           </div>
 
-          <span
-            className={priority === 'High' ? 'text-red-500' : 'text-blue-500'}
-          >
-            • {priority}
-          </span>
+          <span className={priorityStyles[priority]}>• {priority}</span>
 
-          {comments > 0 && <span>{comments} comments</span>}
+          {comments && (
+            <span className="text-sm text-gray-500">💬 {comments}</span>
+          )}
         </div>
       </div>
 

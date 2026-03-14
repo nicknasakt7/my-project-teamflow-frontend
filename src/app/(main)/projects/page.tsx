@@ -1,7 +1,7 @@
 import InputFilter from '@/components/features/projects/input-filter';
-import ProjectCard from '@/components/features/projects/project-card';
 
-import { mockProjects } from '@/components/mocks/mock-data';
+import ProjectList from '@/components/features/projects/project-list';
+
 import { Button } from '@/components/ui/button';
 
 import { Plus } from 'lucide-react';
@@ -12,9 +12,9 @@ export default function ListProjectPage() {
     <div className="flex flex-col gap-6 p-6">
       {/* Title section */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold">Projects</h1>
-          <p className="text-muted-foreground">
+        <div className="flex flex-col space-y-2">
+          <h1 className="text-4xl font-semibold">Projects</h1>
+          <p className="text-xl text-muted-foreground">
             Manage and track all team projects
           </p>
         </div>
@@ -30,12 +30,7 @@ export default function ListProjectPage() {
       {/* Search + Filter */}
       <InputFilter />
       {/* Project grid */}
-      <div className="grid grid-cols-3 gap-6">
-        {/* cards */}
-        {mockProjects.map(project => (
-          <ProjectCard key={project.id} {...project} />
-        ))}
-      </div>
+      <ProjectList />
     </div>
   );
 }
