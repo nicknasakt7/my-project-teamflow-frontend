@@ -2,6 +2,7 @@ import { AlertTriangle, CheckCircle, Clock, Folder, Users } from 'lucide-react';
 import { Member } from '../features/employees/team-member';
 import { ProjectCardProps } from '../features/projects/project-card';
 import { TaskItemProps } from '../features/tasks/task-item';
+import { MemberCardProps } from '../features/employees/member-card';
 
 export const data = {
   summary: {
@@ -225,13 +226,6 @@ export const members: Member[] = [
     color: 'bg-teal-500',
     tasks: 0,
   },
-  {
-    name: 'Lisa Brown',
-    role: 'UX/UI Designer',
-    initials: 'LB',
-    color: 'bg-yellow-500',
-    tasks: 1,
-  },
 ];
 
 export const memberStats = [
@@ -255,7 +249,7 @@ export const memberStats = [
   },
 ];
 
-export const membersCard = [
+export const membersCard: MemberCardProps[] = [
   {
     id: '1',
     name: 'Sarah Chen',
@@ -263,6 +257,7 @@ export const membersCard = [
     email: 'sarah@teamflow.com',
     projects: 5,
     tasks: 12,
+    status: 'Active',
   },
   {
     id: '2',
@@ -271,6 +266,7 @@ export const membersCard = [
     email: 'john@teamflow.com',
     projects: 3,
     tasks: 8,
+    status: 'In active',
   },
   {
     id: '3',
@@ -279,6 +275,79 @@ export const membersCard = [
     email: 'nick@teamflow.com',
     projects: 3,
     tasks: 8,
+    status: 'Active',
+  },
+  {
+    id: '4',
+    name: 'David Kim',
+    position: 'Fullstack Developer',
+    email: 'david@teamflow.com',
+    projects: 2,
+    tasks: 3,
+    status: 'On Leave',
+  },
+  {
+    id: '5',
+    name: 'Lisa Brown',
+    position: 'UX/UI Designer',
+    email: 'lisa@teamflow.com',
+    projects: 6,
+    tasks: 10,
+    status: 'Active',
+  },
+  {
+    id: '6',
+    name: 'Michael Johnson',
+    position: 'DevOps Engineer',
+    email: 'michael@teamflow.com',
+    projects: 3,
+    tasks: 7,
+    status: 'Active',
+  },
+  {
+    id: '7',
+    name: 'Emily Davis',
+    position: 'QA Engineer',
+    email: 'emily@teamflow.com',
+    projects: 4,
+    tasks: 11,
+    status: 'Active',
+  },
+  {
+    id: '8',
+    name: 'James Wilson',
+    position: 'Database Administrator',
+    email: 'james@teamflow.com',
+    projects: 0,
+    tasks: 0,
+    status: 'In active',
+  },
+  {
+    id: '9',
+    name: 'Anna Lee',
+    position: 'Project Manager',
+    email: 'anna@teamflow.com',
+    projects: 3,
+    tasks: 9,
+    status: 'Active',
+  },
+  {
+    id: '10',
+    name: 'Tom Harris',
+    position: 'Scrum Master',
+    email: 'tom@teamflow.com',
+    projects: 2,
+    tasks: 5,
+    status: 'Active',
+  },
+  {
+    id: '11',
+    name: 'Rachel Kim',
+    position: 'UX Designer',
+    email: 'rachel@teamflow.com',
+    projects: 1,
+    tasks: 2,
+    status: 'On Leave',
   },
 ];
 
