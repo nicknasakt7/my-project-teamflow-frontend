@@ -20,7 +20,10 @@ export default function ListProjectPage() {
         </div>
 
         <Button className="gap-2" asChild>
-          <Link href="/projects/create" className="text-xl">
+          <Link
+            href="/projects/create"
+            className="text-xl w-50 h-11 font-semibold"
+          >
             <Plus className="size-5" />
             Create Project
           </Link>

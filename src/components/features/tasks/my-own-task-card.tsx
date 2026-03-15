@@ -1,4 +1,8 @@
+import TaskStatusDropdown from '@/components/shared/task-status-dropdown';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { CalendarDays, SquareCheck, Pencil, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 
 export type MyOwnTaskItemProps = {
   id: string;
@@ -22,6 +26,7 @@ const priorityStyles: Record<MyOwnTaskItemProps['priority'], string> = {
 };
 
 export default function MyOwnTasksCard({
+  id,
   title,
   description,
   status,
@@ -29,46 +34,45 @@ export default function MyOwnTasksCard({
   priority,
 }: MyOwnTaskItemProps) {
   return (
-    <div className="flex items-start justify-between rounded-lg border border-secondary p-4">
-      {/* LEFT CONTENT */}
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-col gap-1">
+    <Link href={`/tasks/my/${id}`}>
+      <Card className="border-secondary hover:shadow-lg hover:-transition-y-1">
+        <CardContent className="flex items-start justify-between ">
+          {/* LEFT */}
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-2">
+                <SquareCheck className="size-8" />
+                <h3 className="font-medium text-xl">{title}</h3>
+              </div>
+
+              <p className="text-md text-muted-foreground">{description}</p>
+            </div>
+
+            {/* META */}
+            <div className="flex items-center gap-3 text-md text-muted-foreground">
+              <div className="flex items-center gap-1">
+                <CalendarDays className="size-4" />
+                {dueDate}
+              </div>
+
+              <span className={priorityStyles[priority]}>• {priority}</span>
+
+              <TaskStatusDropdown status={status} />
+            </div>
+          </div>
+
+          {/* ACTIONS */}
           <div className="flex gap-2">
-            <SquareCheck className="size-8" />
-            <h3 className="font-medium text-xl">{title}</h3>
+            <button className="rounded-md border p-2 hover:bg-secondary ">
+              <Pencil className="size-5 text-chart-3" />
+            </button>
+
+            <Button className="rounded-md border p-2 hover:bg-secondary bg-transparent">
+              <Trash2 className="size-6 text-destructive" />
+            </Button>
           </div>
-
-          <p className="text-md text-muted-foreground">{description}</p>
-        </div>
-
-        {/* META */}
-        <div className="flex items-center gap-3 text-md text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <CalendarDays className="size-4" />
-            {dueDate}
-          </div>
-
-          <span className={priorityStyles[priority]}>• {priority}</span>
-
-          {/* STATUS */}
-          <span
-            className={`rounded-full px-2 py-1 text-xs ${statusStyles[status]}`}
-          >
-            {status}
-          </span>
-        </div>
-      </div>
-
-      {/* ACTIONS */}
-      <div className="flex gap-2">
-        <button className="rounded-md border p-2 hover:bg-secondary">
-          <Pencil className="size-6 text-blue-500" />
-        </button>
-
-        <button className="rounded-md border p-2 hover:bg-secondary">
-          <Trash2 className="size-6 text-destructive" />
-        </button>
-      </div>
-    </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }

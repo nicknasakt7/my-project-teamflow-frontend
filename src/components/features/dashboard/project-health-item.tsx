@@ -37,7 +37,7 @@ export function ProjectHealthItem({
   };
 
   return (
-    <div className="flex flex-col gap-2 rounded-lg border p-4 hover:shadow-lg hover:cursor-pointer transition-all duration-200 hover:-translate-y-0.5">
+    <div className="flex flex-col gap-2 rounded-lg border p-4 hover:shadow-lg  transition-all duration-200 hover:-translate-y-0.5">
       <div className="flex items-center justify-between ">
         <div>
           <p className="font-medium text-lg">{name}</p>

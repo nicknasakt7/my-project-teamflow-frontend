@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import CancelProjectButton from './buttons/cancel-project-button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function ProjectHeader() {
   return (
@@ -26,7 +27,7 @@ export default function ProjectHeader() {
         UI/UX and improved performance.
       </p>
 
-      <div className="flex items-center gap-6 text-sm text-muted-foreground text-lg">
+      <div className="flex items-center gap-6 text-muted-foreground text-lg">
         <span>Due April 30, 2026</span>
         <span>3/5 tasks done</span>
         <span>4 members</span>
@@ -34,9 +35,10 @@ export default function ProjectHeader() {
 
       <div className="flex gap-3">
         <Link href="/projects/:projectId/create-task">
-          <button className="rounded-md bg-primary px-4 py-2 text-white">
-            + Add Task
-          </button>
+          <Button className="rounded-md bg-primary h-11 w-30 text-md text-accent">
+            <Plus />
+            Add Task
+          </Button>
         </Link>
 
         <CancelProjectButton />

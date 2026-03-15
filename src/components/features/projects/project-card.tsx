@@ -6,17 +6,19 @@ export type ProjectCardProps = {
   id: number;
   title: string;
   description: string;
-  status: 'active' | 'completed' | 'canceled';
+  status: 'Active' | 'Completed' | 'Canceled';
   progress: number;
   tasks: number;
   dueDate: string;
-  members: number;
+  users: {
+    id: number;
+    profileImageUrl: string;
+  }[];
 };
-
 const statusColor = {
-  active: 'bg-green-500',
-  completed: 'bg-blue-500',
-  canceled: 'bg-red-500',
+  Active: 'bg-chart-2',
+  Completed: 'bg-chart-3/80',
+  Canceled: 'bg-destructive',
 };
 
 export default function ProjectCard({
@@ -27,7 +29,7 @@ export default function ProjectCard({
   progress,
   tasks,
   dueDate,
-  members,
+  users,
 }: ProjectCardProps) {
   return (
     <Link href={`/projects/${id}`}>
@@ -40,12 +42,12 @@ export default function ProjectCard({
 
         {/* status */}
         <div className="flex items-center gap-2 text-md text-muted-foreground">
-          <span className={`size-2 rounded-full ${statusColor[status]}`}></span>
+          <span className={`size-2 rounded-full ${statusColor[status]}`} />
           {status}
         </div>
 
         {/* progress */}
-        <Progress value={progress} />
+        <Progress value={progress} indicatorClassname={statusColor[status]} />
 
         <div className="flex gap-2 text-md text-muted-foreground">
           <ClipboardList />
@@ -57,7 +59,21 @@ export default function ProjectCard({
         </div>
         <div className="flex gap-2 text-md text-muted-foreground">
           <Users />
-          Team Members: {members}
+          Team Members: {users.length}
+        </div>
+        <div className="flex -space-x-3 mt-2">
+          {users.slice(0, 5).map(user => (
+            <Avatar key={user.id} className="size-9 border-2 border-background">
+              <AvatarImage src={user.profileImageUrl} />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+          ))}
+
+          {users.length > 5 && (
+            <div className="size-9 rounded-full bg-muted flex items-center justify-center text-xs border-2 border-background">
+              +{users.length - 5}
+            </div>
+          )}
         </div>
       </div>
     </Link>

@@ -43,3 +43,23 @@ export const adminPositionLabels: Record<string, string> = {
   SCRUM_MASTER: 'Scrum Master',
   PROJECT_MANAGER: 'Project Manager',
 };
+
+export const allPositions = [
+  { value: 'ENGINEERING_MANAGER', label: 'Engineering Manager' },
+  { value: 'PRODUCT_MANAGER', label: 'Product Manager' },
+  { value: 'SCRUM_MASTER', label: 'Scrum Master' },
+  { value: 'PROJECT_MANAGER', label: 'Project Manager' },
+  { value: 'FRONTEND_DEVELOPER', label: 'Frontend Developer' },
+  { value: 'BACKEND_DEVELOPER', label: 'Backend Developer' },
+  { value: 'FULLSTACK_DEVELOPER', label: 'Fullstack Developer' },
+  { value: 'DEVOPT_ENGINEERING', label: 'DevOps Engineer' },
+  { value: 'QA_ENGINEER', label: 'QA Engineer' },
+  { value: 'QA_AUTOMATE_ENGINEER', label: 'QA Automation Engineer' },
+  { value: 'SOFTWARE_TESTER', label: 'Software Tester' },
+  { value: 'UX_DESIGNER', label: 'UX Designer' },
+  { value: 'UI_DESIGNER', label: 'UI Designer' },
+  { value: 'UX_UI_DESIGNER', label: 'UX/UI Designer' },
+  { value: 'SYSTEM_ADMINISTRATOR', label: 'System Administrator' },
+  { value: 'CLOUD_ENGINEERING', label: 'Cloud Engineer' },
+  { value: 'DATABASE_ADMINISTRATOR', label: 'Database Administrator' },
+];

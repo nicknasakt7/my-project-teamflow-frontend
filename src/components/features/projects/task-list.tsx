@@ -6,7 +6,7 @@ export type TaskListProps = {
 };
 export default function TaskList({ tasks }: TaskListProps) {
   return (
-    <CardContent className="flex flex-col gap-4">
+    <CardContent className="flex flex-col gap-4 ">
       {tasks.map(task => (
         <TaskItem key={task.id} {...task} />
       ))}

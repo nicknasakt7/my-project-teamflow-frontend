@@ -1,9 +1,11 @@
+import { Card, CardContent } from '@/components/ui/card';
 import {
   CalendarDays,
   Check,
   MessageCircleMore,
   SquareCheck,
 } from 'lucide-react';
+import Link from 'next/link';
 
 export type TaskItemProps = {
   id: number;
@@ -16,10 +18,10 @@ export type TaskItemProps = {
 };
 
 const statusStyles: Record<TaskItemProps['status'], string> = {
-  Todo: 'bg-gray-100 text-gray-600',
-  'In progress': 'bg-blue-100 text-blue-600',
-  'In review': 'bg-yellow-100 text-yellow-700',
-  Done: 'bg-green-100 text-green-600',
+  Todo: 'bg-muted text-accent border border-primary/70',
+  'In progress': 'bg-chart-3/80 text-accent border border-chart-2/60',
+  'In review': 'bg-chart-4/80 text-forground border',
+  Done: 'bg-chart-2/80 text-accent border border-chart-2/60',
 };
 const priorityStyles: Record<TaskItemProps['priority'], string> = {
   High: 'text-destructive',
@@ -28,6 +30,7 @@ const priorityStyles: Record<TaskItemProps['priority'], string> = {
 };
 
 export default function TaskItem({
+  id,
   title,
   description,
   status,
@@ -36,40 +39,46 @@ export default function TaskItem({
   comments,
 }: TaskItemProps) {
   return (
-    <div className="flex items-start justify-between rounded-lg border border-secondary p-4">
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-col gap-1">
-          <div className="flex gap-2">
-            <SquareCheck className="size-8" />
-            <h3 className="font-medium text-xl">{title}</h3>
+    <Link href={`/tasks/${id}`}>
+      <Card className="border-secondary hover:shadow-lg hover:-translate-y-1 transition">
+        <CardContent className="flex items-start justify-between">
+          {/* LEFT */}
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-2">
+                <SquareCheck className="size-8" />
+                <h3 className="font-medium text-xl">{title}</h3>
+              </div>
+
+              <p className="text-md text-muted-foreground">{description}</p>
+            </div>
+
+            {/* META */}
+            <div className="flex items-center gap-3 text-md text-muted-foreground">
+              <div className="flex items-center gap-1">
+                <CalendarDays className="size-4" />
+                {dueDate}
+              </div>
+
+              <span className={priorityStyles[priority]}>• {priority}</span>
+
+              {comments && (
+                <span className="flex gap-1 text-md text-gray-500">
+                  <MessageCircleMore className="size-4" />
+                  {comments}
+                </span>
+              )}
+            </div>
           </div>
 
-          <p className="text-md text-muted-foreground">{description}</p>
-        </div>
-
-        {/* META */}
-        <div className="flex items-center gap-3 text-md text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <CalendarDays className="size-4" />
-            {dueDate}
-          </div>
-
-          <span className={priorityStyles[priority]}>• {priority}</span>
-
-          {comments && (
-            <span className="flex gap-1 text-md text-gray-500">
-              <MessageCircleMore /> {comments}
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* STATUS */}
-      <span
-        className={`rounded-full px-2 py-1 text-xs ${statusStyles[status]}`}
-      >
-        {status}
-      </span>
-    </div>
+          {/* RIGHT */}
+          <span
+            className={`rounded-full px-2 py-1 text-md ${statusStyles[status]}`}
+          >
+            {status}
+          </span>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }

@@ -1,32 +1,20 @@
 import { membersCard } from '@/components/mocks/mock-data';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Filter, Search } from 'lucide-react';
+import PositionFilter from '@/components/shared/position-filter';
+import SearchInput from '@/components/shared/search-input';
+import StatusFilter from '@/components/shared/status-filter';
 
 export default function MemberFilter() {
   return (
     <>
       <div className="flex gap-4 items-center">
         {/* SEARCH */}
-        <div className="relative flex-1 w-105">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-muted-foreground" />
-          <Input
-            placeholder="Search by name, last name, or email..."
-            className="pl-9 placeholder:text-lg"
-          />
-        </div>
+        <SearchInput />
 
         {/* POSITION FILTER */}
-        <Button variant="outline" className="text-md">
-          <Filter className="size-5 mr-2" />
-          Position: All
-        </Button>
+        <PositionFilter />
 
         {/* STATUS FILTER */}
-        <Button variant="outline" className="text-md">
-          <Filter className="size-5 mr-2 " />
-          Status: All
-        </Button>
+        <StatusFilter />
       </div>
       <p className="text-sm text-muted-foreground">
         Showing {membersCard.length} of {membersCard.length} members

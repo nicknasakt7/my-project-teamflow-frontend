@@ -4,6 +4,8 @@ import ProjectHeader from '@/components/features/projects/project-header';
 import ProjectProgress from '@/components/features/projects/project-progress-bar';
 import TaskList from '@/components/features/projects/task-list';
 import { tasks } from '@/components/mocks/mock-data';
+import { Card, CardContent } from '@/components/ui/card';
+import Link from 'next/link';
 
 export default function ProjectDetailPage({}: PageProps<'/projects/[projectId]'>) {
   return (
@@ -12,15 +14,17 @@ export default function ProjectDetailPage({}: PageProps<'/projects/[projectId]'>
 
       <ProjectProgress />
 
-      <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-2">
-          <TaskList tasks={tasks} />
-        </div>
+      <Card className="grid grid-cols-3 gap-6">
+        <CardContent className="col-span-2 ">
+          <Link href="/projects/:projectId/:tasksId ">
+            <TaskList tasks={tasks} />
+          </Link>
+        </CardContent>
 
-        <div>
+        <CardContent>
           <TeamMembers />
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
