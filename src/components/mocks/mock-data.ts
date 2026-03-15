@@ -424,3 +424,24 @@ export const myTasks = [
     status: 'To Do',
   },
 ];
+
+export const myOwnTasks = [
+  {
+    id: '1',
+    title: 'Personal Learning - React Advanced Patterns',
+    description:
+      'Study and practice advanced React patterns including render props and compound components',
+    dueDate: 'Apr 15, 2026',
+    priority: 'Medium',
+    status: 'In Progress',
+  },
+  {
+    id: '2',
+    title: 'Portfolio Website Update',
+    description:
+      'Update personal portfolio with latest projects and technologies',
+    dueDate: 'Apr 20, 2026',
+    priority: 'Low',
+    status: 'To Do',
+  },
+];

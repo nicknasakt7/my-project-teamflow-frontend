@@ -6,7 +6,7 @@ type ProjectHealthItemProps = {
   dueDate: string;
   completed: number;
   total: number;
-  status: 'on-track' | 'at-risk' | 'overdue';
+  status: 'Active' | 'Canceled' | 'Overdue';
 };
 
 export function ProjectHealthItem({
@@ -19,17 +19,17 @@ export function ProjectHealthItem({
   const percent = Math.round((completed / total) * 100);
 
   const statusMap = {
-    'on-track': (
+    Active: (
       <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
-        On Track
+        Active
       </Badge>
     ),
-    'at-risk': (
+    Canceled: (
       <Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">
-        At Risk
+        Canceled
       </Badge>
     ),
-    overdue: (
+    Overdue: (
       <Badge className="bg-red-100 text-red-700 hover:bg-red-100">
         Overdue
       </Badge>
@@ -49,7 +49,7 @@ export function ProjectHealthItem({
 
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <span>
-          {completed} / {total} Completed
+          {completed} / {total} Tasks to complete
         </span>
 
         <span>{percent}%</span>
