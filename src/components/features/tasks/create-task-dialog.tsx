@@ -1,3 +1,10 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+
 type CreateTaskDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;

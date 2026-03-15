@@ -21,7 +21,7 @@ const priorityStyles: Record<MyOwnTaskItemProps['priority'], string> = {
   Low: 'text-chart-2',
 };
 
-export default function MyOwnTaskItem({
+export default function MyOwnTasksCard({
   title,
   description,
   status,
