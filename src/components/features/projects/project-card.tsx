@@ -10,11 +10,9 @@ export type ProjectCardProps = {
   progress: number;
   tasks: number;
   dueDate: string;
-  users: {
-    id: number;
-    profileImageUrl: string;
-  }[];
+  members: number;
 };
+
 const statusColor = {
   Active: 'bg-chart-2',
   Completed: 'bg-chart-3/80',
@@ -29,7 +27,7 @@ export default function ProjectCard({
   progress,
   tasks,
   dueDate,
-  users,
+  members,
 }: ProjectCardProps) {
   return (
     <Link href={`/projects/${id}`}>
@@ -59,21 +57,7 @@ export default function ProjectCard({
         </div>
         <div className="flex gap-2 text-md text-muted-foreground">
           <Users />
-          Team Members: {users.length}
-        </div>
-        <div className="flex -space-x-3 mt-2">
-          {users.slice(0, 5).map(user => (
-            <Avatar key={user.id} className="size-9 border-2 border-background">
-              <AvatarImage src={user.profileImageUrl} />
-              <AvatarFallback>U</AvatarFallback>
-            </Avatar>
-          ))}
-
-          {users.length > 5 && (
-            <div className="size-9 rounded-full bg-muted flex items-center justify-center text-xs border-2 border-background">
-              +{users.length - 5}
-            </div>
-          )}
+          Team Members: {members}
         </div>
       </div>
     </Link>
