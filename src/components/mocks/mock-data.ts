@@ -3,6 +3,7 @@ import { Member } from '../features/employees/team-member';
 import { ProjectCardProps } from '../features/projects/project-card';
 import { TaskItemProps } from '../features/tasks/task-item';
 import { MemberCardProps } from '../features/employees/member-card';
+import { MyOwnTaskItemProps } from '../features/tasks/my-own-task-card';
 
 export const data = {
   summary: {
@@ -421,11 +422,11 @@ export const myTasks = [
     description: 'Implement metadata and structured data',
     dueDate: '4/28/2024',
     priority: 'Low',
-    status: 'To Do',
+    status: 'Todo',
   },
 ];
 
-export const myOwnTasks = [
+export const myOwnTasks: MyOwnTaskItemProps[] = [
   {
     id: '1',
     title: 'Personal Learning - React Advanced Patterns',
@@ -433,7 +434,7 @@ export const myOwnTasks = [
       'Study and practice advanced React patterns including render props and compound components',
     dueDate: 'Apr 15, 2026',
     priority: 'Medium',
-    status: 'In Progress',
+    status: 'In progress',
   },
   {
     id: '2',
@@ -442,6 +443,6 @@ export const myOwnTasks = [
       'Update personal portfolio with latest projects and technologies',
     dueDate: 'Apr 20, 2026',
     priority: 'Low',
-    status: 'To Do',
+    status: 'Todo',
   },
 ];

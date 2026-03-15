@@ -1,7 +1,7 @@
 import { CalendarDays, SquareCheck, Pencil, Trash2 } from 'lucide-react';
 
 export type MyOwnTaskItemProps = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   status: 'Todo' | 'In progress' | 'Done';

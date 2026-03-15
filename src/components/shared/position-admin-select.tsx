@@ -7,12 +7,7 @@ import {
 } from '@/components/ui/select';
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
-import {
-  adminPositionLabels,
-  adminPositions,
-  positionLabels,
-  positions,
-} from '@/constants/positions';
+import { adminPositionLabels, adminPositions } from '@/constants/positions';
 
 type PositionAdminSelectProps = {
   field: any;

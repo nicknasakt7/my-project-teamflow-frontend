@@ -19,7 +19,7 @@ import { Loader } from 'lucide-react';
 import { useTransition } from 'react';
 import { RegisterInput, registerSchema } from '@/lib/schemas/auth.schema';
 import GenderSelect from '@/components/shared/gender-select';
-import PositionSelect from '@/components/shared/position-select';
+
 import LevelSelect from '@/components/shared/level-select';
 import PositionAdminSelect from '@/components/shared/position-admin-select';
 
