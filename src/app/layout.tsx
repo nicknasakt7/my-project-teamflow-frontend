@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
 import { inter } from '@/styles/fonts';
+import { ThemeProvider } from '@/components/shared/components/next-themes-provider';
 
 export const metadata: Metadata = {
   title: {
@@ -15,8 +16,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`antialiased ${inter.className}`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`antialiased ${inter.className}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

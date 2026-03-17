@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { TaskComments } from './task-comment';
 import TaskHeader from './task-header';
 
-import { TaskStatusSelector } from './task-status-selector';
 import { TaskDetailProps } from '@/components/shared/types/task-type';
 import { ArrowLeft } from 'lucide-react';
+import { TaskStatusSelector } from './task-status-selector';
 
 export default function TaskDetailSection({ task }: TaskDetailProps) {
   return (

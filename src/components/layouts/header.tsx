@@ -2,13 +2,14 @@ import { Bell, Moon } from 'lucide-react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ModeToggle } from './theme';
 
 export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 h-16 bg-secondary shadow flex items-center justify-between px-8 gap-3 z-40">
       {/* Logo */}
       <div>
-        <Link href="/projects">
+        <Link href="/">
           <div className="flex gap-4 size-8 rounded-md bg-muted font-semibold">
             <Image src="/logo.png" alt="logo" width={40} height={40} />
             <span className="font-semibold text-sidebar-foreground text-2xl">
@@ -25,9 +26,7 @@ export default function Header() {
         </div>
 
         {/* Dark mode */}
-        <Button variant="outline" size="icon" className="p-5">
-          <Moon className="size-5 " />
-        </Button>
+        <ModeToggle />
 
         {/* Notification */}
         <Button variant="outline" size="icon" className="relative p-5">

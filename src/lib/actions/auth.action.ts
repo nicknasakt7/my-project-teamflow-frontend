@@ -9,7 +9,7 @@ import {
 import { authService } from '../api/auth/auth.service';
 import { formatActionError } from './action.util';
 import { redirect } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+import { signIn, signOut } from '../auth/auth';
 
 export const registerAdmin = async (
   input: RegisterAdminInput,
@@ -37,9 +37,19 @@ export const createMember = async (
 
 export const login = async (input: LoginInput): Promise<ActionResult> => {
   try {
-    await signIn('credentials', { ...input, redirect: false });
-  } catch {
+    const res = signIn('credentials', { ...input, redirect: false });
+    console.log('signIn result', res);
+    if (!res || (await res).error) {
+      return { success: false, code: 'INVALID_CREDENTIALS' };
+    }
+  } catch (error) {
+    console.log('login error:', error);
     return { success: false, code: 'INVALID_CREDENTIALS' };
   }
-  redirect('/');
+  redirect('/projects');
+};
+
+export const logout = async (): Promise<ActionResult> => {
+  console.log('logout มามั้ยยยยย');
+  await signOut({ redirectTo: '/login' });
 };

@@ -9,11 +9,17 @@ import { Controller, useForm } from 'react-hook-form';
 import { LoginInput, loginSchema } from '@/lib/schemas/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
-import Link from 'next/link';
+
 import { login } from '@/lib/actions/auth.action';
+import { Alert, AlertTitle } from '../ui/alert';
 
 export default function LoginForm() {
-  const { handleSubmit, control } = useForm<LoginInput>({
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { errors },
+  } = useForm<LoginInput>({
     defaultValues: {
       email: '',
       password: '',
@@ -25,12 +31,24 @@ export default function LoginForm() {
 
   const onSubmit = (data: LoginInput) => {
     startTransition(async () => {
-      await login(data);
+      const res = await login(data);
+      if (!res.success) {
+        setError('root', {
+          message: 'The email or password you entered is incorrect',
+        });
+      }
     });
   };
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
+        {errors.root && (
+          <Alert>
+            <AlertTitle className="text-destructive text-lg">
+              {errors.root.message}
+            </AlertTitle>
+          </Alert>
+        )}
         <FieldGroup>
           {/* Email */}
           <Controller
@@ -95,16 +113,14 @@ export default function LoginForm() {
               className="w-full text-lg font-semibold"
               disabled={isPending}
             >
-              <Link href="/dashboard">
-                {isPending ? (
-                  <>
-                    <Loader className="animate-spin mr-2 size-4" />
-                    Signing in...
-                  </>
-                ) : (
-                  'Sign In'
-                )}
-              </Link>
+              {isPending ? (
+                <>
+                  <Loader className="animate-spin mr-2 size-4" />
+                  Signing in...
+                </>
+              ) : (
+                'Sign In'
+              )}
             </Button>
           </Field>
         </FieldGroup>

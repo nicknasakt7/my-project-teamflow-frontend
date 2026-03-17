@@ -45,7 +45,7 @@ export default function ProjectCard({
         </div>
 
         {/* progress */}
-        <Progress value={progress} indicatorClassname={statusColor[status]} />
+        <Progress value={progress} />
 
         <div className="flex gap-2 text-md text-muted-foreground">
           <ClipboardList />

@@ -18,7 +18,7 @@ const projects = [
     dueDate: 'Feb 15, 2026',
     completed: 2,
     total: 5,
-    status: 'Overdue' as const,
+    status: 'Completed' as const,
   },
   {
     id: '3',

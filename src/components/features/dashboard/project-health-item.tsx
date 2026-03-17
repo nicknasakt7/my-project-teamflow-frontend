@@ -6,7 +6,7 @@ type ProjectHealthItemProps = {
   dueDate: string;
   completed: number;
   total: number;
-  status: 'Active' | 'Canceled' | 'Overdue';
+  status: 'Active' | 'Canceled' | 'Completed';
 };
 
 export function ProjectHealthItem({
@@ -29,9 +29,9 @@ export function ProjectHealthItem({
         Canceled
       </Badge>
     ),
-    Overdue: (
+    Completed: (
       <Badge className="bg-red-100 text-red-700 hover:bg-red-100">
-        Overdue
+        Completed
       </Badge>
     ),
   };

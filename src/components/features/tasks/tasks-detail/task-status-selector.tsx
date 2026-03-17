@@ -6,7 +6,6 @@ const statuses = ['TODO', 'IN_PROGRESS', 'IN_REVIEW', 'DONE'];
 
 type TaskStatusSelectorProps = {
   status: TaskDetail['status'];
-  onChangeStatus: (status: TaskDetail['status']) => void;
 };
 export function TaskStatusSelector({ status }: TaskStatusSelectorProps) {
   return (
