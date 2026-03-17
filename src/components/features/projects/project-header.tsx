@@ -2,8 +2,11 @@ import Link from 'next/link';
 import CancelProjectButton from './buttons/cancel-project-button';
 import { ArrowLeft, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+type ProjectHeaderProps = {
+  projectId: string;
+};
 
-export default function ProjectHeader() {
+export default function ProjectHeader({ projectId }: ProjectHeaderProps) {
   return (
     <div className="flex flex-col gap-4">
       <Link
@@ -34,7 +37,7 @@ export default function ProjectHeader() {
       </div>
 
       <div className="flex gap-3">
-        <Link href="/projects/:projectId/create-task">
+        <Link href={`/projects/${projectId}/create-task`}>
           <Button className="rounded-md bg-primary h-11 w-30 text-md text-accent">
             <Plus />
             Add Task

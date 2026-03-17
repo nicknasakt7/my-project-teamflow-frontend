@@ -1,6 +1,6 @@
 import LoginForm from '@/components/auth/login-form';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { Metadata } from 'next';
 import Image from 'next/image';

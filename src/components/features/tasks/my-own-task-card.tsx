@@ -1,8 +1,11 @@
+'use client';
 import TaskStatusDropdown from '@/components/shared/task-status-dropdown';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CalendarDays, SquareCheck, Pencil, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+import EditTaskDialog from './edit-task-dialog';
 
 export type MyOwnTaskItemProps = {
   id: string;
@@ -33,6 +36,7 @@ export default function MyOwnTasksCard({
   dueDate,
   priority,
 }: MyOwnTaskItemProps) {
+  const [openEdit, setOpenEdit] = useState(false);
   return (
     <Link href={`/tasks/my/${id}`}>
       <Card className="border-secondary hover:shadow-lg hover:-transition-y-1">
@@ -63,9 +67,19 @@ export default function MyOwnTasksCard({
 
           {/* ACTIONS */}
           <div className="flex gap-2">
-            <button className="rounded-md border p-2 hover:bg-secondary ">
+            <Button
+              onClick={e => {
+                e.preventDefault();
+                setOpenEdit(true);
+              }}
+              className="rounded-md border p-2 hover:bg-secondary bg-transparent"
+            >
               <Pencil className="size-5 text-chart-3" />
-            </button>
+            </Button>
+            <EditTaskDialog
+              openEdit={openEdit}
+              onOpenEditChange={setOpenEdit}
+            />
 
             <Button className="rounded-md border p-2 hover:bg-secondary bg-transparent">
               <Trash2 className="size-6 text-destructive" />

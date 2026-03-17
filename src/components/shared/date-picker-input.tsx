@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 type DatePickerInputProps = {
   id: string;
   isValid: boolean;
-  value: Date;
+  value: Date | undefined;
   onValueChange: (...event: unknown[]) => void;
 };
 export default function DatePickerInput({

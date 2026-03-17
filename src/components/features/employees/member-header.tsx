@@ -14,7 +14,7 @@ export default function MemberHeader() {
       </div>
 
       <Button asChild>
-        <Link href="/employees/create" className="text-xl font-semibold">
+        <Link href="/employees/create" className="text-lg font-semibold">
           <Plus className="size-5" /> Add Member
         </Link>
       </Button>

@@ -46,12 +46,3 @@ export default function TasksLayout({
     </div>
   );
 }
-
-{
-  /* <button className="bg-chart-1 text-xl text-card font-bold px-4 py-2 rounded-lg">
-          <Link href="/tasks">Assigned</Link>
-        </button>
-        <button className="bg-chart-2 text-xl text-card font-bold px-4 py-2 rounded-lg ">
-          <Link href="/tasks/my">My Tasks</Link>
-        </button> */
-}

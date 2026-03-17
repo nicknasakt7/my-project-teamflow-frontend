@@ -8,10 +8,11 @@ import {
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { adminPositionLabels, adminPositions } from '@/constants/positions';
+import { ControllerFieldState, FieldValues } from 'react-hook-form';
 
 type PositionAdminSelectProps = {
-  field: any;
-  fieldState: any;
+  field: FieldValues;
+  fieldState: ControllerFieldState;
 };
 
 export default function PositionAdminSelect({

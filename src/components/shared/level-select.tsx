@@ -8,12 +8,9 @@ import {
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 
-type Props = {
-  field: any;
-  fieldState: any;
-};
+import { FieldTypeProps } from './types/field-type';
 
-export default function LevelSelect({ field, fieldState }: Props) {
+export default function LevelSelect({ field, fieldState }: FieldTypeProps) {
   return (
     <Field data-invalid={fieldState.invalid}>
       <FieldLabel className="text-lg">Employment Level</FieldLabel>

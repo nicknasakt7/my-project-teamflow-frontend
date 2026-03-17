@@ -6,7 +6,7 @@ import StatusFilter from '@/components/shared/status-filter';
 export default function MemberFilter() {
   return (
     <>
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-center border-2 px-8 py-4 rounded-lg">
         {/* SEARCH */}
         <SearchInput />
 

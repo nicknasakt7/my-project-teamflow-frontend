@@ -17,14 +17,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Loader } from 'lucide-react';
 import { useTransition } from 'react';
-import { RegisterInput, registerSchema } from '@/lib/schemas/auth.schema';
+
 import GenderSelect from '@/components/shared/gender-select';
 
 import LevelSelect from '@/components/shared/level-select';
 import PositionAdminSelect from '@/components/shared/position-admin-select';
+import {
+  RegisterAdminInput,
+  registerAdminSchema,
+} from '@/lib/schemas/auth.schema';
 
 export default function RegisterMemberForm() {
-  const { handleSubmit, control } = useForm<RegisterInput>({
+  const { handleSubmit, control } = useForm<RegisterAdminInput>({
     defaultValues: {
       email: '',
       password: '',
@@ -36,12 +40,12 @@ export default function RegisterMemberForm() {
       level: undefined,
       status: undefined,
     },
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(registerAdminSchema),
   });
 
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = (data: registerSchema) => {
+  const onSubmit = (data: RegisterAdminInput) => {
     startTransition(async () => {
       console.log('create member', data);
     });

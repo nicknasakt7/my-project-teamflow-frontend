@@ -58,9 +58,7 @@ export default function Sidebar() {
               size="icon"
               className="hover:text-destructive transition-colors"
             >
-              <Link href="/login">
-                <LogOut className="size-5" />
-              </Link>
+              <LogOut className="size-5" />
             </Button>
           </div>
         </Link>

@@ -8,12 +8,9 @@ import {
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 
-type GenderSelectProps = {
-  field: any;
-  fieldState: any;
-};
+import { FieldTypeProps } from './types/field-type';
 
-export default function GenderSelect({ field, fieldState }: GenderSelectProps) {
+export default function GenderSelect({ field, fieldState }: FieldTypeProps) {
   return (
     <Field data-invalid={fieldState.invalid}>
       <FieldLabel className="text-lg">Gender</FieldLabel>

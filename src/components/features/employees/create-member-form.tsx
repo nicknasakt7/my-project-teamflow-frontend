@@ -17,13 +17,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Loader } from 'lucide-react';
 import { useTransition } from 'react';
-import { RegisterInput, registerSchema } from '@/lib/schemas/auth.schema';
+
 import GenderSelect from '@/components/shared/gender-select';
 import PositionSelect from '@/components/shared/position-select';
 import LevelSelect from '@/components/shared/level-select';
+import {
+  CreateMemberInput,
+  createMemberSchema,
+} from '@/lib/schemas/auth.schema';
+import { createMember } from '@/lib/actions/auth.action';
 
 export default function CreateMemberForm() {
-  const { handleSubmit, control } = useForm<RegisterInput>({
+  const { handleSubmit, control, setError } = useForm<CreateMemberInput>({
     defaultValues: {
       email: '',
       password: '',
@@ -33,16 +38,19 @@ export default function CreateMemberForm() {
       gender: undefined,
       position: undefined,
       level: undefined,
-      status: undefined,
+      status: 'ACTIVE',
     },
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(createMemberSchema),
   });
 
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = (data: registerSchema) => {
+  const onSubmit = (data: CreateMemberInput) => {
     startTransition(async () => {
-      console.log('create member', data);
+      const res = await createMember(data);
+      if (!res.success && res.code === 'EMAIL_ALREADY_EXISTS') {
+        setError('email', { message: res.message });
+      }
     });
   };
 

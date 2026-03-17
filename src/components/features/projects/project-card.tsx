@@ -31,7 +31,7 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <Link href={`/projects/${id}`}>
-      <div className="h-80 border rounded-xl p-5 flex flex-col gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer">
+      <div className="h-80 border rounded-xl p-5 flex flex-col gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer shadow-md">
         <h3 className="font-semibold text-xl line-clamp-1">{title}</h3>
 
         <p className="text-md font-medium text-muted-foreground line-clamp-2">

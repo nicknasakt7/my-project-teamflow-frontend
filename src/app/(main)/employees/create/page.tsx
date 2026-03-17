@@ -29,10 +29,6 @@ export default function CreateMemberPage() {
       </div>
 
       {/* RIGHT PANEL */}
-
-      {/* <AddMemberForm /> */}
-
-      {/* RIGHT PANEL */}
       <div className="flex flex-1 justify-center items-start">
         <div className="w-200 rounded-xl border bg-card p-6 shadow-sm">
           <div className="mb-6">

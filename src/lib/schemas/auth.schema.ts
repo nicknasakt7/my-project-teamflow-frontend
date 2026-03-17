@@ -1,8 +1,7 @@
 import z from 'zod';
 
-export const registerSchema = z.object({
-  email: z.email('Invalid email format').min(1, 'Email is required'),
-
+export const baseRegisterSchema = z.object({
+  email: z.email('Invalid email format'),
   password: z
     .string()
     .regex(
@@ -14,43 +13,52 @@ export const registerSchema = z.object({
 
   lastName: z.string().min(1, 'Last name is required').max(100),
 
-  birthDate: z.date('Birth date is required'),
+  birthDate: z.date().optional(),
 
   gender: z.enum(['MALE', 'FEMALE', 'OTHER'], 'Gender is required'),
-
-  position: z.enum(
-    [
-      'FRONTEND_DEVELOPER',
-      'BACKEND_DEVELOPER',
-      'FULLSTACK_DEVELOPER',
-      'DEVOPT_ENGINEERING',
-
-      'QA_ENGINEER',
-      'QA_AUTOMATE_ENGINEER',
-      'SOFTWARE_TESTER',
-
-      'UX_DESIGNER',
-      'UI_DESIGNER',
-      'UX_UI_DESIGNER',
-
-      'SYSTEM_ADMINISTRATOR',
-      'CLOUD_ENGINEERING',
-      'DATABASE_ADMINISTRATOR',
-    ],
-    'Position is required',
-  ),
 
   level: z.enum(
     ['JUNIOR', 'MID', 'SENIOR', 'LEAD'],
     'Employment level is required',
   ),
-  status: z.enum(['ACTIVE', 'INACTIVE', 'LEAVE'], 'Status is required'),
+  status: z.enum(['ACTIVE', 'INACTIVE', 'LEAVE']).optional(),
 });
 
-export type RegisterInput = z.infer<typeof registerSchema>;
+export type BaseRegisterInput = z.infer<typeof baseRegisterSchema>;
+
+export const registerAdminSchema = baseRegisterSchema.extend({
+  position: z.enum([
+    'ENGINEERING_MANAGER',
+    'PRODUCT_MANAGER',
+    'SCRUM_MASTER',
+    'PROJECT_MANAGER',
+  ]),
+});
+
+export type RegisterAdminInput = z.infer<typeof registerAdminSchema>;
+
+export const createMemberSchema = baseRegisterSchema.extend({
+  position: z.enum([
+    'FRONTEND_DEVELOPER',
+    'BACKEND_DEVELOPER',
+    'FULLSTACK_DEVELOPER',
+    'DEVOPT_ENGINEERING',
+    'QA_ENGINEER',
+    'QA_AUTOMATE_ENGINEER',
+    'SOFTWARE_TESTER',
+    'UX_DESIGNER',
+    'UI_DESIGNER',
+    'UX_UI_DESIGNER',
+    'SYSTEM_ADMINISTRATOR',
+    'CLOUD_ENGINEERING',
+    'DATABASE_ADMINISTRATOR',
+  ]),
+});
+
+export type CreateMemberInput = z.infer<typeof createMemberSchema>;
 
 export const loginSchema = z.object({
   email: z.email('Email is required'),
-  password: z.string().regex(/^[0-9a-zA-z]{6,}$/, 'Password is required'),
+  password: z.string().regex(/^[0-9a-zA-Z]{6,}$/, 'Password is required'),
 });
 export type LoginInput = z.infer<typeof loginSchema>;

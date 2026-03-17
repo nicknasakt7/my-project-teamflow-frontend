@@ -10,6 +10,7 @@ import { LoginInput, loginSchema } from '@/lib/schemas/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
 import Link from 'next/link';
+import { login } from '@/lib/actions/auth.action';
 
 export default function LoginForm() {
   const { handleSubmit, control } = useForm<LoginInput>({
@@ -24,7 +25,7 @@ export default function LoginForm() {
 
   const onSubmit = (data: LoginInput) => {
     startTransition(async () => {
-      const res = await login(data);
+      await login(data);
     });
   };
   return (

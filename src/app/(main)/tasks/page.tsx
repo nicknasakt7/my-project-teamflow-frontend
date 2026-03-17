@@ -7,12 +7,13 @@ export default function AssignedTasksPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold ">Assigned Tasks</h1>
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-center border-2 px-8 py-4 rounded-lg">
         <SearchInput />
         <StatusFilter />
       </div>
-
-      <TaskList tasks={tasks} />
+      <div className="border-2 px-2 py-8 rounded-lg">
+        <TaskList tasks={tasks} />
+      </div>
     </div>
   );
 }

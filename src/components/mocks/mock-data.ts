@@ -4,6 +4,7 @@ import { ProjectCardProps } from '../features/projects/project-card';
 import { TaskItemProps } from '../features/tasks/task-item';
 import { MemberCardProps } from '../features/employees/member-card';
 import { MyOwnTaskItemProps } from '../features/tasks/my-own-task-card';
+import { TaskDetail } from '../shared/types/task-detail-type';
 
 export const data = {
   summary: {
@@ -252,7 +253,7 @@ export const memberStats = [
 
 export const membersCard: MemberCardProps[] = [
   {
-    id: '1',
+    id: 1,
     name: 'Sarah Chen',
     position: 'Product Manager',
     email: 'sarah@teamflow.com',
@@ -261,7 +262,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'Active',
   },
   {
-    id: '2',
+    id: 2,
     name: 'John Smith',
     position: 'Frontend Developer',
     email: 'john@teamflow.com',
@@ -270,7 +271,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'In active',
   },
   {
-    id: '3',
+    id: 3,
     name: 'Nick Nasa',
     position: 'Frontend Developer',
     email: 'nick@teamflow.com',
@@ -279,7 +280,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'Active',
   },
   {
-    id: '4',
+    id: 4,
     name: 'David Kim',
     position: 'Fullstack Developer',
     email: 'david@teamflow.com',
@@ -288,7 +289,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'On Leave',
   },
   {
-    id: '5',
+    id: 5,
     name: 'Lisa Brown',
     position: 'UX/UI Designer',
     email: 'lisa@teamflow.com',
@@ -297,7 +298,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'Active',
   },
   {
-    id: '6',
+    id: 6,
     name: 'Michael Johnson',
     position: 'DevOps Engineer',
     email: 'michael@teamflow.com',
@@ -306,7 +307,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'Active',
   },
   {
-    id: '7',
+    id: 7,
     name: 'Emily Davis',
     position: 'QA Engineer',
     email: 'emily@teamflow.com',
@@ -315,7 +316,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'Active',
   },
   {
-    id: '8',
+    id: 8,
     name: 'James Wilson',
     position: 'Database Administrator',
     email: 'james@teamflow.com',
@@ -324,7 +325,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'In active',
   },
   {
-    id: '9',
+    id: 9,
     name: 'Anna Lee',
     position: 'Project Manager',
     email: 'anna@teamflow.com',
@@ -333,7 +334,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'Active',
   },
   {
-    id: '10',
+    id: 10,
     name: 'Tom Harris',
     position: 'Scrum Master',
     email: 'tom@teamflow.com',
@@ -342,7 +343,7 @@ export const membersCard: MemberCardProps[] = [
     status: 'Active',
   },
   {
-    id: '11',
+    id: 11,
     name: 'Rachel Kim',
     position: 'UX Designer',
     email: 'rachel@teamflow.com',
@@ -361,6 +362,10 @@ export const tasks: TaskItemProps[] = [
     dueDate: 'Feb 10',
     priority: 'High',
     comments: 2,
+    project: {
+      id: 1,
+      title: 'Test1',
+    },
   },
   {
     id: 2,
@@ -370,6 +375,10 @@ export const tasks: TaskItemProps[] = [
     dueDate: 'Feb 20',
     priority: 'High',
     comments: 1,
+    project: {
+      id: 1,
+      title: 'Test1',
+    },
   },
   {
     id: 3,
@@ -379,6 +388,10 @@ export const tasks: TaskItemProps[] = [
     dueDate: 'Mar 1',
     priority: 'Medium',
     comments: 0,
+    project: {
+      id: 1,
+      title: 'Test1',
+    },
   },
   {
     id: 4,
@@ -388,6 +401,10 @@ export const tasks: TaskItemProps[] = [
     dueDate: 'Mar 1',
     priority: 'Medium',
     comments: 0,
+    project: {
+      id: 1,
+      title: 'Test1',
+    },
   },
 ];
 
@@ -446,3 +463,29 @@ export const myOwnTasks: MyOwnTaskItemProps[] = [
     status: 'Todo',
   },
 ];
+
+export const mockTask: TaskDetail = {
+  id: '1',
+  title: 'Design landing page mockups',
+  description: 'Create high-fidelity mockups...',
+
+  status: 'IN_REVIEW',
+  priority: 'MEDIUM',
+
+  assignee: {
+    name: 'Lisa Brown',
+    role: 'UX/UI Designer',
+  },
+
+  creator: {
+    name: 'Sarah Chen',
+    role: 'Product Manager',
+  },
+
+  dueDate: 'Mar 1',
+  createdAt: 'Jan 10',
+
+  projectName: 'E-Commerce Platform Redesign',
+
+  comments: [],
+};

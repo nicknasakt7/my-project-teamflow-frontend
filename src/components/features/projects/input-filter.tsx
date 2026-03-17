@@ -9,7 +9,7 @@ import {
 
 export default function InputFilter() {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 border-2 px-8 py-4 rounded-lg">
       <Input placeholder="Search projects..." className="placeholder:text-lg" />
 
       <Select defaultValue="all">
