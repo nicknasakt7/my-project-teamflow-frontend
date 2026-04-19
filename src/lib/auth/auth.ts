@@ -3,6 +3,13 @@ import Credentials from 'next-auth/providers/credentials';
 import { authService } from '../api/auth/auth.service';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  pages: {
+    signIn: '/login',
+    error: '/login',
+  },
+  session: {
+    strategy: 'jwt',
+  },
   providers: [
     Credentials({
       async authorize(credentials) {

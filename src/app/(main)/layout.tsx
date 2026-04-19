@@ -7,7 +7,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen bg-primary-foreground">
+    <div className="h-screen bg-background">
       {/* Sidebar */}
       <Sidebar />
 

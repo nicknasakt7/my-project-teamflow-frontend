@@ -13,7 +13,7 @@ export const baseRegisterSchema = z.object({
 
   lastName: z.string().min(1, 'Last name is required').max(100),
 
-  birthDate: z.date().optional(),
+  birthDate: z.date(),
 
   gender: z.enum(['MALE', 'FEMALE', 'OTHER'], 'Gender is required'),
 
@@ -38,6 +38,7 @@ export const registerAdminSchema = baseRegisterSchema.extend({
 export type RegisterAdminInput = z.infer<typeof registerAdminSchema>;
 
 export const createMemberSchema = baseRegisterSchema.extend({
+  roleType: z.enum(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']),
   position: z.enum([
     'FRONTEND_DEVELOPER',
     'BACKEND_DEVELOPER',
@@ -62,3 +63,21 @@ export const loginSchema = z.object({
   password: z.string().regex(/^[0-9a-zA-Z]{6,}$/, 'Password is required'),
 });
 export type LoginInput = z.infer<typeof loginSchema>;
+
+export const forgotPasswordSchema = z.object({
+  email: z.email('Invalid email format'),
+});
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+
+export const resetPasswordSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .regex(/^[0-9a-zA-Z]{6,}$/, 'Password must be at least 6 characters'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;

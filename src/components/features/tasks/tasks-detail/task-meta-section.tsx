@@ -1,15 +1,17 @@
-import { TaskDetailProps } from '@/components/shared/types/task-type';
 import { ProjectCard } from './project-card';
 import { TaskDetailsCard } from './task-detail-card';
 import { UserCard } from './user-card';
+import type { TaskDetailResponse } from '@/lib/api/task/task.type';
 
-export default function TaskMetaSection({ task }: TaskDetailProps) {
+type TaskMetaSectionProps = { task: TaskDetailResponse };
+
+export default function TaskMetaSection({ task }: TaskMetaSectionProps) {
   return (
     <div className="space-y-4 mt-12">
-      <UserCard title="Assigned to" user={task.assignee} />
-      <UserCard title="Created by" user={task.creator} />
+      <UserCard title="Assigned to" user={task.assignTo} />
+      <UserCard title="Created by" user={task.createdBy} />
       <TaskDetailsCard task={task} />
-      <ProjectCard name={task.projectName} />
+      <ProjectCard project={task.project} />
     </div>
   );
 }

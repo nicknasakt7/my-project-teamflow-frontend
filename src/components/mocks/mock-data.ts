@@ -1,7 +1,7 @@
 import { AlertTriangle, CheckCircle, Clock, Folder, Users } from 'lucide-react';
-import { Member } from '../features/employees/team-member';
-import { ProjectCardProps } from '../features/projects/project-card';
 import { TaskItemProps } from '../features/tasks/task-item';
+
+type Member = { name: string; role: string; initials: string; color: string; tasks: number };
 import { MemberCardProps } from '../features/employees/member-card';
 import { MyOwnTaskItemProps } from '../features/tasks/my-own-task-card';
 import { TaskDetail } from '../shared/types/task-detail-type';
@@ -103,108 +103,6 @@ export const projects = [
   },
 ];
 
-export const mockProjects: ProjectCardProps[] = [
-  {
-    id: 1,
-    title: 'Website Redesign',
-    description: 'Complete overhaul of the company website',
-    status: 'Active',
-    progress: 60,
-    tasks: 12,
-    dueDate: 'Mar 25, 2026',
-    members: 3,
-  },
-  {
-    id: 2,
-    title: 'Mobile App Development',
-    description: 'Build cross-platform mobile app',
-    status: 'Active',
-    progress: 40,
-    tasks: 24,
-    dueDate: 'Apr 15, 2026',
-    members: 4,
-  },
-  {
-    id: 3,
-    title: 'API Integration',
-    description: 'Integrate third-party APIs',
-    status: 'Completed',
-    progress: 100,
-    tasks: 8,
-    dueDate: 'Mar 10, 2026',
-    members: 2,
-  },
-  {
-    id: 4,
-    title: 'API Integration2',
-    description: 'Integrate third-party APIs2',
-    status: 'Completed',
-    progress: 100,
-    tasks: 8,
-    dueDate: 'Mar 15, 2026',
-    members: 2,
-  },
-  {
-    id: 5,
-    title: 'Marketing Website',
-    description: 'Create landing pages and marketing content',
-    status: 'Active',
-    progress: 40,
-    tasks: 10,
-    dueDate: 'Apr 10, 2026',
-    members: 3,
-  },
-  {
-    id: 6,
-    title: 'CRM System',
-    description: 'Develop internal CRM for sales tracking',
-    status: 'Active',
-    progress: 25,
-    tasks: 18,
-    dueDate: 'May 5, 2026',
-    members: 5,
-  },
-  {
-    id: 7,
-    title: 'Analytics Dashboard',
-    description: 'Build analytics dashboard for product metrics',
-    status: 'Active',
-    progress: 55,
-    tasks: 14,
-    dueDate: 'Apr 20, 2026',
-    members: 4,
-  },
-  {
-    id: 8,
-    title: 'Authentication Service',
-    description: 'Implement OAuth and secure login system',
-    status: 'Completed',
-    progress: 100,
-    tasks: 9,
-    dueDate: 'Mar 5, 2026',
-    members: 2,
-  },
-  {
-    id: 9,
-    title: 'Payment Gateway',
-    description: 'Integrate Stripe and payment workflows',
-    status: 'Active',
-    progress: 65,
-    tasks: 11,
-    dueDate: 'Apr 18, 2026',
-    members: 3,
-  },
-  {
-    id: 10,
-    title: 'Internal Admin Panel',
-    description: 'Create admin tools for managing users and data',
-    status: 'Canceled',
-    progress: 10,
-    tasks: 6,
-    dueDate: 'Jun 1, 2026',
-    members: 2,
-  },
-] as const;
 
 export const members: Member[] = [
   {

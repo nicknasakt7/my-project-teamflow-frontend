@@ -1,0 +1,11 @@
+import z from 'zod';
+
+export const createTaskSchema = z.object({
+  title: z.string().min(1, 'Title is required'),
+  description: z.string().optional(),
+  priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT'], 'Priority is required'),
+  dueDate: z.date(),
+  assignToId: z.string().min(1, 'Assignee is required'),
+});
+
+export type CreateTaskInput = z.infer<typeof createTaskSchema>;

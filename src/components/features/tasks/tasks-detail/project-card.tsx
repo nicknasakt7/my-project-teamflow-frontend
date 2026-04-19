@@ -1,15 +1,20 @@
-import { TaskDetail } from '@/components/shared/types/task-detail-type';
 import { Card, CardContent } from '@/components/ui/card';
+import { Folder } from 'lucide-react';
 
-type TaskCommentsProps = {
-  name: TaskDetail['projectName'];
+type ProjectCardProps = {
+  project?: { id: string; title: string } | null;
 };
-export function ProjectCard({ name }: TaskCommentsProps) {
+
+export function ProjectCard({ project }: ProjectCardProps) {
+  if (!project) return null;
   return (
-    <Card>
+    <Card className="border-l-4 border-l-teal-400 shadow-md">
       <CardContent className="p-4">
-        <p className="text-lg font-semibold text-muted-foreground">Project</p>
-        <p className="text-lg font-medium">{name}</p>
+        <div className="flex items-center gap-1.5 mb-2">
+          <Folder className="size-4 text-teal-500 dark:text-teal-400" />
+          <p className="text-xs font-semibold uppercase tracking-wider text-teal-500 dark:text-teal-400">Project</p>
+        </div>
+        <p className="font-semibold text-base">{project.title}</p>
       </CardContent>
     </Card>
   );

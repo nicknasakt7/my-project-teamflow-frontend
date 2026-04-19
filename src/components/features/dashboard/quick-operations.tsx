@@ -45,7 +45,7 @@ export default function QuickOperations() {
   before:transition-transform before:duration-700"
           asChild
         >
-          <Link href="/">
+          <Link href="/projects/overdue">
             <AlertTriangle className="size-6" />
             View Overdue Tasks
           </Link>

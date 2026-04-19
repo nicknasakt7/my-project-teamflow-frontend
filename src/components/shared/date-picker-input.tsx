@@ -11,12 +11,14 @@ type DatePickerInputProps = {
   isValid: boolean;
   value: Date | undefined;
   onValueChange: (...event: unknown[]) => void;
+  placeholder?: string;
 };
 export default function DatePickerInput({
   id,
   isValid,
   value,
   onValueChange,
+  placeholder = 'Select Date Of Birth',
 }: DatePickerInputProps) {
   const [open, setOpen] = useState(false);
 
@@ -34,7 +36,7 @@ export default function DatePickerInput({
             format(value, 'dd MMMM yyyy')
           ) : (
             <span className="text-muted-foreground text-[1.00rem]">
-              Select Date Of Birth
+              {placeholder}
             </span>
           )}
         </Button>

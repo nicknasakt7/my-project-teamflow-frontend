@@ -12,15 +12,38 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { useSession } from 'next-auth/react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { apiClient } from '@/lib/api/api-client';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
-export default function CancelProjectButton() {
+type CancelProjectButtonProps = {
+  projectId: string;
+};
+
+export default function CancelProjectButton({ projectId }: CancelProjectButtonProps) {
+  const { data: session } = useSession();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: () =>
+      apiClient.patch(`/projects/${projectId}/status`, {}, session?.user?.accessToken!),
+    onSuccess: () => {
+      toast.success('Project cancelled');
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      router.push('/projects');
+    },
+    onError: (error: any) => {
+      toast.error(error?.message ?? 'Failed to cancel project');
+    },
+  });
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          variant="destructive"
-          className="rounded-md border h-11 text-md"
-        >
+        <Button variant="destructive" className="rounded-md border h-11 text-md">
           Cancel Project
         </Button>
       </AlertDialogTrigger>
@@ -28,18 +51,19 @@ export default function CancelProjectButton() {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Cancel this project?</AlertDialogTitle>
-
           <AlertDialogDescription>
-            This action cannot be undone. The project will be permanently
-            cancelled.
+            This action cannot be undone. The project will be permanently cancelled.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>No, keep it</AlertDialogCancel>
-
-          <AlertDialogAction variant="destructive">
-            Yes, cancel project
+          <AlertDialogCancel disabled={isPending}>No, keep it</AlertDialogCancel>
+          <AlertDialogAction
+            variant="destructive"
+            disabled={isPending}
+            onClick={() => mutate()}
+          >
+            {isPending ? 'Cancelling...' : 'Yes, cancel project'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

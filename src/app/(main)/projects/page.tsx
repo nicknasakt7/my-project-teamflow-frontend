@@ -1,6 +1,4 @@
-import InputFilter from '@/components/features/projects/input-filter';
-
-import ProjectList from '@/components/features/projects/project-list';
+import ProjectsContent from '@/components/features/projects/projects-content';
 
 import { Button } from '@/components/ui/button';
 
@@ -22,7 +20,7 @@ export default function ListProjectPage() {
         <Button className="gap-2" asChild>
           <Link
             href="/projects/create"
-            className="text-xl w-50 h-11 font-semibold"
+            className="text-sm w-44 h-10 font-semibold rounded-full"
           >
             <Plus className="size-5" />
             Create Project
@@ -30,10 +28,7 @@ export default function ListProjectPage() {
         </Button>
       </div>
 
-      {/* Search + Filter */}
-      <InputFilter />
-      {/* Project grid */}
-      <ProjectList />
+      <ProjectsContent />
     </div>
   );
 }

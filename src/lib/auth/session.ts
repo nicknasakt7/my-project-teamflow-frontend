@@ -36,12 +36,11 @@ const currentUserSchema = z.object({
 
 export const getCurrentUser = async () => {
   const session = await auth();
-  console.log(session);
   if (!session) redirect('/login');
 
   const { success, data, error } = currentUserSchema.safeParse(session.user);
   if (!success) {
-    console.log('Session user is invalid: \n', z.prettifyError(error));
+    void z.prettifyError(error);
     redirect('/login');
   }
 

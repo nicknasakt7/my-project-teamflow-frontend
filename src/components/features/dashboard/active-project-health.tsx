@@ -1,56 +1,42 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+'use client';
 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ProjectHealthItem } from './project-health-item';
 import Link from 'next/link';
-
-const projects = [
-  {
-    id: '1',
-    name: 'E-Commerce Platform Redesign',
-    dueDate: 'Apr 30, 2026',
-    completed: 3,
-    total: 5,
-    status: 'Active' as const,
-  },
-  {
-    id: '2',
-    name: 'Mobile Banking App',
-    dueDate: 'Feb 15, 2026',
-    completed: 2,
-    total: 5,
-    status: 'Completed' as const,
-  },
-  {
-    id: '3',
-    name: 'Customer Portal',
-    dueDate: 'May 10, 2026',
-    completed: 4,
-    total: 6,
-    status: 'Active' as const,
-  },
-];
+import { useProjectProgress } from '@/lib/api/dashboard/hooks/useProjectProgress';
 
 export default function ActiveProjectHealth() {
+  const { data, isLoading } = useProjectProgress();
+  const projects = data?.data ?? [];
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-xl">Active Project Health</CardTitle>
-
-        <span className="text-md text-muted-foreground cursor-pointer hover:bg-secondary hover:text-primary font-medium px-4 rounded-xl">
+        <Link
+          href="/projects"
+          className="text-md text-muted-foreground cursor-pointer hover:bg-secondary hover:text-primary font-medium px-4 rounded-xl"
+        >
           View all
-        </span>
+        </Link>
       </CardHeader>
 
       <CardContent className="flex flex-col gap-4">
-        {projects.map(project => (
-          <Link
-            key={project.id}
-            href={`/projects/${project.id}`}
-            className="block hover:opacity-80 transition hover:text-chart-3"
-          >
-            <ProjectHealthItem {...project} />
-          </Link>
-        ))}
+        {isLoading ? (
+          <p className="text-muted-foreground text-sm py-4 text-center">Loading...</p>
+        ) : projects.length === 0 ? (
+          <p className="text-muted-foreground text-sm py-4 text-center">No active projects</p>
+        ) : (
+          projects.map(project => (
+            <Link
+              key={project.projectId}
+              href={`/projects/${project.projectId}`}
+              className="block hover:opacity-80 transition hover:text-chart-3"
+            >
+              <ProjectHealthItem {...project} />
+            </Link>
+          ))
+        )}
       </CardContent>
     </Card>
   );

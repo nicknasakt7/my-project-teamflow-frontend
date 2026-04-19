@@ -1,4 +1,4 @@
-import { Label } from '@/components/ui/label';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import {
   Select,
   SelectContent,
@@ -6,22 +6,40 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { FieldTypeProps } from '@/components/shared/types/field-type';
 
-export default function AssignSelect() {
+type Member = { id: string; firstName: string; lastName: string };
+
+type AssignSelectProps = FieldTypeProps & {
+  members: Member[];
+};
+
+export default function AssignSelect({
+  field,
+  fieldState,
+  members,
+}: AssignSelectProps) {
   return (
-    <div className="space-y-2">
-      <Label className="text-md">Assign To *</Label>
+    <Field data-invalid={fieldState.invalid}>
+      <FieldLabel className="text-md">
+        Assign To <span className="text-red-500">*</span>
+      </FieldLabel>
 
-      <Select>
-        <SelectTrigger>
+      <Select value={field.value ?? ''} onValueChange={field.onChange}>
+        <SelectTrigger aria-invalid={fieldState.invalid}>
           <SelectValue placeholder="Select team member" />
         </SelectTrigger>
 
         <SelectContent>
-          <SelectItem value="1">John Smith</SelectItem>
-          <SelectItem value="2">Jane Doe</SelectItem>
+          {members.map((m) => (
+            <SelectItem key={m.id} value={m.id}>
+              {m.firstName} {m.lastName}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
-    </div>
+
+      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+    </Field>
   );
 }

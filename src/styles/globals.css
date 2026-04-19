@@ -51,17 +51,17 @@
   --background: oklch(96% 0.01 70);
   --foreground: oklch(22% 0.01 260);
   /* Card */
-  --card: oklch(96.464% 0.00161 66.267);
-  --card-foreground: oklch(46.869% 0.00913 48.297);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(22% 0.01 260);
   /* Popover */
   --popover: oklch(100% 0 0);
   --popover-foreground: oklch(22% 0.01 260);
-  /* Primary (Buttons #57534D) */
-  --primary: oklch(40% 0.02 70);
+  /* Primary (~#8A7B74) */
+  --primary: oklch(54.7% 0.021 43.1);
   --primary-foreground: oklch(98% 0 0);
 
-  /* Secondary (Header tone #C3BFBD) */
-  --secondary: oklch(80% 0.01 70);
+  /* Secondary (~#ECE5E2) */
+  --secondary: oklch(92.2% 0.005 34.3);
   --secondary-foreground: oklch(22% 0.01 260);
   /* Muted background */
   --muted: oklch(46.04% 0.00005 271.152 / 0.675);
@@ -100,28 +100,28 @@
 .dark {
   /* --background: oklch(0.13 0.028 261.692);
   --foreground: oklch(0.985 0.002 247.839); */
-  --background: oklch(22% 0.01 60);
+  --background: oklch(42.979% 0.0051 55.96);
   --foreground: oklch(96% 0.005 60);
-  --card: oklch(23.844% 0.0065 258.423);
-  --card-foreground: oklch(0.985 0.002 247.839);
+  --card: oklch(38.693% 0.00356 84.5);
+  --card-foreground: oklch(96% 0.005 60);
   --popover: oklch(0.21 0.034 264.665);
   --popover-foreground: oklch(0.985 0.002 247.839);
   /* --primary: oklch(0.928 0.006 264.531);
   --primary-foreground: oklch(0.21 0.034 264.665); */
   --primary: oklch(52.444% 0.01664 57.245);
 
-  --primary-foreground: oklch(30.118% 0.00003 271.152);
+  --primary-foreground: oklch(68.706% 0.00115 13.434);
   --secondary: oklch(19.574% 0.00002 271.152);
   --secondary-foreground: oklch(0.985 0.002 247.839);
-  --muted: oklch(78.24% 0.00312 264.734);
-  --muted-foreground: oklch(0.707 0.022 261.325);
+  --muted: oklch(32% 0.005 60);
+  --muted-foreground: oklch(65% 0.01 60);
   --accent: oklch(0.278 0.033 256.848);
   --accent-foreground: oklch(0.985 0.002 247.839);
   --destructive: oklch(0.704 0.191 22.216);
   /* --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%); */
-  --border: oklch(30% 0.005 60);
-  --input: oklch(30% 0.005 60);
+  --border: oklch(35% 0.008 60);
+  --input: oklch(35% 0.008 60);
   --ring: oklch(0.551 0.027 264.364);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
@@ -149,7 +149,8 @@
 
 @layer base {
   button:not(:disabled),
-  [role='button']:not(:disabled) {
+  [role='button']:not(:disabled),
+  a[href] {
     cursor: pointer;
   }
 }

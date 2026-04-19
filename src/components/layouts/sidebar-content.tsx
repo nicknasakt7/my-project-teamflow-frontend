@@ -10,15 +10,21 @@ import {
 } from 'lucide-react';
 import SidebarItem from './sidebar-item';
 
-export default function SidebarContent() {
-  const menu = [
-    { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
-    { icon: Folder, label: 'Projects', href: '/projects' },
-    { icon: ListTodo, label: 'Tasks', href: '/tasks' },
-    { icon: Users, label: 'Members', href: '/employees' },
-    { icon: UserPlus, label: 'Register Admin', href: '/register-admin' },
-    { icon: Settings, label: 'Settings', href: '/settings' },
-  ];
+const allMenu = [
+  { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { icon: Folder, label: 'Projects', href: '/projects', roles: ['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE'] },
+  { icon: ListTodo, label: 'Tasks', href: '/tasks', roles: ['EMPLOYEE'] },
+  { icon: Users, label: 'Members', href: '/employees', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { icon: UserPlus, label: 'Register Admin', href: '/register-admin', roles: ['SUPER_ADMIN'] },
+  { icon: Settings, label: 'Settings', href: '/settings', roles: ['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE'] },
+];
+
+interface SidebarContentProps {
+  roleType?: string;
+}
+
+export default function SidebarContent({ roleType }: SidebarContentProps) {
+  const menu = allMenu.filter(item => !roleType || item.roles.includes(roleType));
 
   return (
     <nav className="flex flex-col gap-1 p-4 flex-1">

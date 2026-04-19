@@ -1,6 +1,4 @@
-'use client';
-
-import { Label } from '@/components/ui/label';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import {
   Select,
   SelectContent,
@@ -8,25 +6,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { FieldTypeProps } from '@/components/shared/types/field-type';
 
-export default function PrioritySelect() {
+export default function PrioritySelect({ field, fieldState }: FieldTypeProps) {
   return (
-    <div className="space-y-2">
-      <Label className="text-md">Priority *</Label>
+    <Field data-invalid={fieldState.invalid}>
+      <FieldLabel className="text-md">
+        Priority <span className="text-red-500">*</span>
+      </FieldLabel>
 
-      <Select>
-        <SelectTrigger>
-          <SelectValue placeholder="MEDIUM" />
+      <Select value={field.value ?? ''} onValueChange={field.onChange}>
+        <SelectTrigger aria-invalid={fieldState.invalid}>
+          <SelectValue placeholder="Select priority" />
         </SelectTrigger>
 
         <SelectContent>
-          <SelectItem value="low">LOW</SelectItem>
-          <SelectItem value="medium">MEDIUM</SelectItem>
-          <SelectItem value="high">HIGH</SelectItem>
+          <SelectItem value="LOW">Low</SelectItem>
+          <SelectItem value="MEDIUM">Medium</SelectItem>
+          <SelectItem value="HIGH">High</SelectItem>
+          <SelectItem value="URGENT">Urgent</SelectItem>
         </SelectContent>
       </Select>
 
-      <p className="text-xs text-muted-foreground">• Normal priority</p>
-    </div>
+      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+    </Field>
   );
 }

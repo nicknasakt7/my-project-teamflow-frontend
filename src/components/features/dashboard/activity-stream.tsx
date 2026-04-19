@@ -2,17 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import ActivityItem from './activity-item';
 
-type Activity = {
-  id: string;
-  message: string;
-  createdAt: Date;
-};
+import type { Activity } from '@/lib/api/dashboard/dashboard.type';
 
-type Props = {
+type ActivityStreamProps = {
   activities: Activity[];
 };
 
-export default function ActivityStream({ activities }: Props) {
+export default function ActivityStream({ activities }: ActivityStreamProps) {
   return (
     <Card>
       <CardHeader>
