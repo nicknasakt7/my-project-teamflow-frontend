@@ -15,6 +15,6 @@ export const useDeleteComment = (taskId: string) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', taskId] });
     },
-    onError: (error: any) => toast.error(error?.message ?? 'Failed to delete comment'),
+    onError: (error: Error) => toast.error(error.message ?? 'Failed to delete comment'),
   });
 };

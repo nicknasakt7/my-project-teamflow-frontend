@@ -15,6 +15,6 @@ export const useCreateComment = (taskId: string) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', taskId] });
     },
-    onError: (error: any) => toast.error(error?.message ?? 'Failed to post comment'),
+    onError: (error: Error) => toast.error(error.message ?? 'Failed to post comment'),
   });
 };

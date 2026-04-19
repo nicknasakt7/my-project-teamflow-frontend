@@ -15,6 +15,6 @@ export const useUpdateComment = (taskId: string) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', taskId] });
     },
-    onError: (error: any) => toast.error(error?.message ?? 'Failed to update comment'),
+    onError: (error: Error) => toast.error(error.message ?? 'Failed to update comment'),
   });
 };

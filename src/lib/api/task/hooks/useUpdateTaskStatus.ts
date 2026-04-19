@@ -19,8 +19,8 @@ export const useUpdateTaskStatus = (taskId: string) => {
       queryClient.invalidateQueries({ queryKey: ['personal-tasks'] });
       toast.success('Status updated successfully');
     },
-    onError: (error: any) => {
-      const message = error?.message ?? 'Failed to update status';
+    onError: (error: Error) => {
+      const message = error.message ?? 'Failed to update status';
       toast.error(message);
     },
   });

@@ -35,8 +35,8 @@ export default function CancelProjectButton({ projectId }: CancelProjectButtonPr
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       router.push('/projects');
     },
-    onError: (error: any) => {
-      toast.error(error?.message ?? 'Failed to cancel project');
+    onError: (error: Error) => {
+      toast.error(error.message ?? 'Failed to cancel project');
     },
   });
 

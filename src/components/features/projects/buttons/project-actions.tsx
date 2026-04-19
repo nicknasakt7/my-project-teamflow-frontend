@@ -36,7 +36,7 @@ export default function ProjectActions({ projectId }: ProjectActionsProps) {
       queryClient.invalidateQueries({ queryKey: ['project', projectId] });
       queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
-    onError: (error: any) => toast.error(error?.message ?? 'Failed to cancel project'),
+    onError: (error: Error) => toast.error(error.message ?? 'Failed to cancel project'),
   });
 
   const { mutate: restore, isPending: isRestoring } = useMutation({
@@ -46,7 +46,7 @@ export default function ProjectActions({ projectId }: ProjectActionsProps) {
       queryClient.invalidateQueries({ queryKey: ['project', projectId] });
       queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
-    onError: (error: any) => toast.error(error?.message ?? 'Failed to restore project'),
+    onError: (error: Error) => toast.error(error.message ?? 'Failed to restore project'),
   });
 
   if (isCanceled) {

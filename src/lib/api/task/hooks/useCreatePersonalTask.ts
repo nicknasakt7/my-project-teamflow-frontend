@@ -23,6 +23,6 @@ export const useCreatePersonalTask = () => {
       toast.success('Task created');
       queryClient.invalidateQueries({ queryKey: ['personal-tasks'] });
     },
-    onError: (error: any) => toast.error(error?.message ?? 'Failed to create task'),
+    onError: (error: Error) => toast.error(error.message ?? 'Failed to create task'),
   });
 };
