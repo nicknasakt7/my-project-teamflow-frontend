@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { useTaskDetail } from '@/lib/api/task/hooks/useTaskDetail';
 import TaskDetailSection from './task-detail-section';
 import TaskMetaSection from './task-meta-section';
@@ -7,6 +8,8 @@ import TaskMetaSection from './task-meta-section';
 type TaskDetailClientProps = { taskId: string };
 
 export default function TaskDetailClient({ taskId }: TaskDetailClientProps) {
+  const searchParams = useSearchParams();
+  const backPage = searchParams.get('page') ?? '1';
   const { data: task, isLoading, isError } = useTaskDetail(taskId);
 
   if (isLoading) {
@@ -27,7 +30,7 @@ export default function TaskDetailClient({ taskId }: TaskDetailClientProps) {
 
   return (
     <div className="grid grid-cols-3 gap-6 p-6">
-      <TaskDetailSection task={task} />
+      <TaskDetailSection task={task} backPage={backPage} />
       <TaskMetaSection task={task} />
     </div>
   );

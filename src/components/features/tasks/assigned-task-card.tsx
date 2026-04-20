@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { CalendarDays, SquareCheck } from 'lucide-react';
+import { CalendarDays, SquareCheck, UserPen } from 'lucide-react';
 import Link from 'next/link';
 import type { Task, TaskPriority, TaskStatus } from '@/lib/api/task/task.type';
 
@@ -35,8 +35,8 @@ const priorityStyles: Record<TaskPriority, string> = {
   URGENT: 'text-destructive font-bold',
 };
 
-export default function AssignedTaskCard({ id, title, description, status, dueDate, priority, project, projectId }: Task) {
-  const href = projectId && project ? `/projects/${projectId}/${id}` : '#';
+export default function AssignedTaskCard({ id, title, description, status, dueDate, priority, project, projectId, createdBy, page = 1 }: Task & { page?: number }) {
+  const href = projectId && project ? `/projects/${projectId}/${id}?page=${page}` : '#';
 
   return (
     <Link href={href}>
@@ -64,6 +64,12 @@ export default function AssignedTaskCard({ id, title, description, status, dueDa
               {project && (
                 <span className="bg-primary/10 text-chart-3 font-bold px-2 py-0.5 rounded-md">
                   {project.title}
+                </span>
+              )}
+              {createdBy && (
+                <span className="flex items-center gap-1">
+                  <UserPen className="size-4" />
+                  {createdBy.firstName} {createdBy.lastName}
                 </span>
               )}
             </div>

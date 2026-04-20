@@ -5,13 +5,13 @@ import TaskHeader from './task-header';
 import { TaskStatusSelector } from './task-status-selector';
 import type { TaskDetailResponse } from '@/lib/api/task/task.type';
 
-type TaskDetailSectionProps = { task: TaskDetailResponse };
+type TaskDetailSectionProps = { task: TaskDetailResponse; backPage?: string };
 
-export default function TaskDetailSection({ task }: TaskDetailSectionProps) {
+export default function TaskDetailSection({ task, backPage = '1' }: TaskDetailSectionProps) {
   return (
     <div className="col-span-2 space-y-4">
       <Link
-        href="/tasks"
+        href={`/tasks?page=${backPage}`}
         className="gap-4 text-md font-semibold text-muted-foreground flex justify-start items-center pl-2 hover:bg-accent w-60 h-8 rounded-xl"
       >
         <ArrowLeft />

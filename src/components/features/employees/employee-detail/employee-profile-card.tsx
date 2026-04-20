@@ -2,13 +2,29 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
-import { Camera, Mail, Briefcase, Shield, BarChart2, Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Camera, Mail, Briefcase, Shield, BarChart2, Loader2, Pencil, Trash2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import type { User, Status } from '@/lib/api/user/user.type';
 import { allPositions } from '@/constants/positions';
 import { useUploadEmployeeAvatar } from '@/lib/api/employee/hooks/useUploadEmployeeAvatar';
+import { useDeleteEmployee } from '@/lib/api/employee/hooks/useDeleteEmployee';
+import EditEmployeeModal from './edit-employee-modal';
 
 const statusStyles: Record<Status, string> = {
   ACTIVE: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
@@ -29,13 +45,19 @@ function getInitials(firstName: string, lastName: string) {
   return `${firstName[0] ?? ''}${lastName[0] ?? ''}`.toUpperCase();
 }
 
-export default function EmployeeProfileCard({ employee }: { employee: User }) {
+export default function EmployeeProfileCard({ employee, taskCount = 0 }: { employee: User; taskCount?: number }) {
   const { data: session } = useSession();
+  const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const { mutate: uploadAvatar, isPending } = useUploadEmployeeAvatar(employee.id);
+  const { mutate: deleteEmployee, isPending: isDeleting } = useDeleteEmployee();
 
   const isAdmin =
     session?.user?.roleType === 'ADMIN' || session?.user?.roleType === 'SUPER_ADMIN';
+  const isSuperAdmin = session?.user?.roleType === 'SUPER_ADMIN';
+  const canEditMember =
+    (session?.user?.roleType === 'ADMIN' || session?.user?.roleType === 'SUPER_ADMIN') &&
+    employee.roleType === 'EMPLOYEE';
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -96,13 +118,69 @@ export default function EmployeeProfileCard({ employee }: { employee: User }) {
 
         {/* Info */}
         <div className="flex-1 min-w-0 space-y-2">
-          <div className="flex items-center gap-3 flex-wrap">
-            <h2 className="text-2xl font-semibold">
-              {employee.firstName} {employee.lastName}
-            </h2>
-            <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${statusStyles[employee.status]}`}>
-              {statusLabel[employee.status]}
-            </span>
+          <div className="flex items-center gap-3 flex-wrap justify-between">
+            <div className="flex items-center gap-3 flex-wrap">
+              <h2 className="text-2xl font-semibold">
+                {employee.firstName} {employee.lastName}
+              </h2>
+              <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${statusStyles[employee.status]}`}>
+                {statusLabel[employee.status]}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              {isSuperAdmin && employee.roleType === 'ADMIN' && <EditEmployeeModal employee={employee} />}
+              {canEditMember && (
+                <Button asChild variant="outline" size="sm" className="gap-2">
+                  <Link href={`/employees/${employee.id}/edit`}>
+                    <Pencil className="size-4" />
+                    Edit Member
+                  </Link>
+                </Button>
+              )}
+              {isSuperAdmin && (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" size="sm" className="gap-2" disabled={isDeleting}>
+                      <Trash2 className="size-4" />
+                      Delete
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete this employee?</AlertDialogTitle>
+                      <AlertDialogDescription asChild>
+                        <div className="space-y-2">
+                          <p>
+                            {employee.firstName} {employee.lastName} will be removed from the system.
+                            This action can be reversed by an administrator.
+                          </p>
+                          {taskCount > 0 && (
+                            <p className="text-destructive font-medium">
+                              ⚠️ This employee has {taskCount} active task{taskCount > 1 ? 's' : ''} assigned.
+                              Please reassign them before deleting.
+                            </p>
+                          )}
+                        </div>
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        variant="destructive"
+                        disabled={isDeleting}
+                        onClick={() =>
+                          deleteEmployee(employee.id, {
+                            onSuccess: () => router.push('/employees'),
+                          })
+                        }
+                      >
+                        {isDeleting ? 'Deleting...' : 'Yes, delete'}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
+            </div>
           </div>
           <p className="text-muted-foreground">{positionLabel(employee.position)}</p>
 

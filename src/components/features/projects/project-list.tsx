@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useProjects } from '@/lib/api/project/hooks/useProjects';
 import ProjectCard from './project-card';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,18 @@ type ProjectListProps = {
 const LIMIT = 12;
 
 export default function ProjectList({ search, status }: ProjectListProps) {
-  const [page, setPage] = useState(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [page, setPage] = useState(() => {
+    const p = Number(searchParams.get('page'));
+    return p > 0 ? p : 1;
+  });
+
+  const handlePageChange = (p: number) => {
+    setPage(p);
+    router.replace(`/projects?page=${p}`, { scroll: false });
+  };
+
   const { data, isLoading } = useProjects({ page, limit: LIMIT, search, status });
 
   const projects = data?.projects ?? [];
@@ -38,7 +50,7 @@ export default function ProjectList({ search, status }: ProjectListProps) {
         ) : projects.length === 0 ? (
           <p className="text-muted-foreground col-span-full text-center py-10">No projects found</p>
         ) : (
-          projects.map(project => <ProjectCard key={project.id} {...project} />)
+          projects.map(project => <ProjectCard key={project.id} {...project} page={page} />)
         )}
       </div>
 
@@ -48,7 +60,7 @@ export default function ProjectList({ search, status }: ProjectListProps) {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => setPage(p => p - 1)}
+            onClick={() => handlePageChange(page - 1)}
             disabled={page === 1}
           >
             <ChevronLeft className="size-4" />
@@ -59,7 +71,7 @@ export default function ProjectList({ search, status }: ProjectListProps) {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => setPage(p => p + 1)}
+            onClick={() => handlePageChange(page + 1)}
             disabled={page === totalPages}
           >
             <ChevronRight className="size-4" />

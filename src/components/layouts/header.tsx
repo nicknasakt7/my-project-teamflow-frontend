@@ -1,8 +1,8 @@
-import { Bell, Moon } from 'lucide-react';
-import { Button } from '../ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ModeToggle } from './theme';
+import NotificationBell from '@/components/features/notifications/notification-bell';
+import LiveClock from './live-clock';
 
 export default function Header() {
   return (
@@ -20,19 +20,13 @@ export default function Header() {
       </div>
       {/* Date */}
       <div className="flex gap-4 items-center">
-        <div className="text-md font-semibold text-foreground bg-accent px-4 py-1 rounded-md">
-          Thu, Mar 12, 2026
-          <div className="text-md text-right ">10:28 PM</div>
-        </div>
+        <LiveClock />
 
         {/* Dark mode */}
         <ModeToggle />
 
         {/* Notification */}
-        <Button variant="outline" size="icon" className="relative p-5">
-          <Bell className="size-5" />
-          <span className="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full" />
-        </Button>
+        <NotificationBell />
       </div>
     </header>
   );

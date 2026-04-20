@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -121,8 +122,8 @@ export default function CreateProjectForm() {
 
               {/* Buttons */}
               <div className="flex justify-end gap-3 border-t pt-4">
-                <Button type="button" variant="outline" disabled={isPending}>
-                  <a href="/projects">Cancel</a>
+                <Button asChild variant="outline" disabled={isPending}>
+                  <Link href="/projects">Cancel</Link>
                 </Button>
                 <Button type="submit" disabled={isPending}>
                   {isPending ? (

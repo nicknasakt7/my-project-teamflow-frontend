@@ -45,6 +45,15 @@ const createTask = (payload: CreatePersonalTaskPayload, token: string) =>
 const deleteTask = (taskId: string, token: string) =>
   apiClient.delete<void>(`/tasks/${taskId}`, token);
 
+const getTasksByAssignee = (assignToId: string, token: string) =>
+  apiClient.get<GetMyTasksResponse>('/tasks', { assignTo: assignToId, limit: 50 }, token);
+
+const getAdminTasks = (params: GetMyTasksParams, createdBy: string, token: string) =>
+  apiClient.get<GetMyTasksResponse>('/tasks', { ...params, createdBy, isPersonal: false } as Record<string, unknown>, token);
+
+const reassignTask = (taskId: string, assignToId: string, token: string) =>
+  apiClient.patch<Task>(`/tasks/${taskId}`, { assignToId }, token);
+
 export const taskClientService = {
   getMyTasks,
   getProjectTasks,
@@ -53,4 +62,7 @@ export const taskClientService = {
   getPersonalTasks,
   createTask,
   deleteTask,
+  getTasksByAssignee,
+  reassignTask,
+  getAdminTasks,
 };

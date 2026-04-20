@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users } from 'lucide-react';
 import { useProjectDetail } from '@/lib/api/project/hooks/useProjectDetail';
@@ -18,7 +19,10 @@ function getInitials(firstName: string, lastName: string) {
 function MemberRow({ member }: { member: ProjectMember }) {
   const { user } = member;
   return (
-    <div className="flex items-center gap-3">
+    <Link
+      href={`/employees/${member.userId}`}
+      className="flex items-center gap-3 rounded-md px-1 py-1 hover:bg-muted transition-colors"
+    >
       {user.profileImageUrl ? (
         <Image
           src={user.profileImageUrl}
@@ -33,14 +37,14 @@ function MemberRow({ member }: { member: ProjectMember }) {
         </div>
       )}
       <div className="flex flex-col min-w-0">
-        <span className="font-medium text-sm truncate">
+        <span className="font-medium text-sm truncate hover:underline">
           {user.firstName} {user.lastName}
         </span>
         <span className="text-xs text-muted-foreground truncate">
           {positionLabel(user.position)}
         </span>
       </div>
-    </div>
+    </Link>
   );
 }
 

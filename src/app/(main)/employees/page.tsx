@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEmployees } from '@/lib/api/employee/hooks/useEmployees';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import MemberHeader from '@/components/features/employees/member-header';
@@ -11,12 +12,23 @@ import type { RoleType, Status, Position, Level } from '@/lib/api/user/user.type
 const LIMIT = 12;
 
 export default function MemberPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [search, setSearch] = useState('');
   const [role, setRole] = useState<RoleType | ''>('');
   const [status, setStatus] = useState<Status | ''>('');
   const [position, setPosition] = useState<Position | ''>('');
   const [level, setLevel] = useState<Level | ''>('');
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(() => {
+    const p = Number(searchParams.get('page'));
+    return p > 0 ? p : 1;
+  });
+
+  const handlePageChange = (p: number) => {
+    setPage(p);
+    router.replace(`/employees?page=${p}`, { scroll: false });
+  };
 
   const debouncedSearch = useDebounce(search, 400);
 
@@ -34,11 +46,11 @@ export default function MemberPage() {
   const total = data?.meta.total ?? 0;
   const totalPages = Math.ceil(total / LIMIT);
 
-  const handleSearch = (value: string) => { setSearch(value); setPage(1); };
-  const handleRole = (value: RoleType | '') => { setRole(value); setPage(1); };
-  const handleStatus = (value: Status | '') => { setStatus(value); setPage(1); };
-  const handlePosition = (value: Position | '') => { setPosition(value); setPage(1); };
-  const handleLevel = (value: Level | '') => { setLevel(value); setPage(1); };
+  const handleSearch = (value: string) => { setSearch(value); handlePageChange(1); };
+  const handleRole = (value: RoleType | '') => { setRole(value); handlePageChange(1); };
+  const handleStatus = (value: Status | '') => { setStatus(value); handlePageChange(1); };
+  const handlePosition = (value: Position | '') => { setPosition(value); handlePageChange(1); };
+  const handleLevel = (value: Level | '') => { setLevel(value); handlePageChange(1); };
 
   return (
     <div className="p-6 space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500 ease-out">
@@ -64,7 +76,7 @@ export default function MemberPage() {
         isLoading={isLoading}
         page={page}
         totalPages={totalPages}
-        onPageChange={setPage}
+        onPageChange={handlePageChange}
       />
     </div>
   );

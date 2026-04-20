@@ -5,6 +5,7 @@ import ProjectActions from './buttons/project-actions';
 import { ArrowLeft, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 import { useProjectDetail } from '@/lib/api/project/hooks/useProjectDetail';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { ProjectStatus } from '@/lib/api/project/project.type';
@@ -35,6 +36,8 @@ export default function ProjectHeader({ projectId }: ProjectHeaderProps) {
   const { data: session } = useSession();
   const role = session?.user?.roleType;
   const isAdmin = role === 'ADMIN' || role === 'SUPER_ADMIN';
+  const searchParams = useSearchParams();
+  const backPage = searchParams.get('page') ?? '1';
 
   const { data: project, isLoading } = useProjectDetail(projectId);
 
@@ -66,7 +69,7 @@ export default function ProjectHeader({ projectId }: ProjectHeaderProps) {
   return (
     <div className="flex flex-col gap-4">
       <Link
-        href="/projects"
+        href={`/projects?page=${backPage}`}
         className="gap-4 text-md font-semibold text-muted-foreground flex justify-start items-center pl-2 hover:bg-accent w-60 h-8 rounded-xl"
       >
         <ArrowLeft />

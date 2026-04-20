@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
@@ -11,23 +12,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import DatePickerInput from '@/components/shared/date-picker-input';
-import AssignSelect from './assign-select';
+import AssignMemberPicker from './assign-member-picker';
 import PrioritySelect from './priority-select';
 
 import { CreateTaskInput, createTaskSchema } from '@/lib/schemas/task.schema';
 import { createTask } from '@/lib/actions/task.action';
 
-type Member = { id: string; firstName: string; lastName: string };
-
 type CreateTaskFormProps = {
   projectId: string;
-  members: Member[];
 };
 
-export default function CreateTaskForm({
-  projectId,
-  members,
-}: CreateTaskFormProps) {
+export default function CreateTaskForm({ projectId }: CreateTaskFormProps) {
   const { handleSubmit, control } = useForm<CreateTaskInput>({
     defaultValues: {
       title: '',
@@ -146,22 +141,14 @@ export default function CreateTaskForm({
               control={control}
               name="assignToId"
               render={({ field, fieldState }) => (
-                <AssignSelect
-                  field={field}
-                  fieldState={fieldState}
-                  members={members}
-                />
+                <AssignMemberPicker field={field} fieldState={fieldState} />
               )}
             />
 
             {/* Buttons */}
             <div className="flex justify-end gap-6 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isPending}
-              >
-                <a href={`/projects/${projectId}`}>Cancel</a>
+              <Button asChild variant="outline" disabled={isPending}>
+                <Link href={`/projects/${projectId}`}>Cancel</Link>
               </Button>
 
               <Button type="submit" disabled={isPending}>

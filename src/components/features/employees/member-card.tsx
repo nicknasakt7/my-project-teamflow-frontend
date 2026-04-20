@@ -32,7 +32,7 @@ export default function MemberCard({
 }: MemberCardProps) {
   return (
     <Link href={`/employees/${id}`}>
-      <div className="border rounded-xl p-5 flex flex-col gap-4 bg-sidebar-accent shadow-md hover:text-chart-3/80">
+      <div className="border rounded-xl p-5 flex flex-col gap-4 bg-sidebar-accent shadow-md hover:text-chart-3/80 transition-all duration-200 hover:-translate-y-2 hover:scale-[1.20] hover:shadow-2xl">
         <div className="flex justify-between items-start gap-2">
           <div className="flex items-center gap-3 flex-1 min-w-0 l">
             <div className="w-10 h-10 rounded-full bg-chart-3 flex items-center justify-center text-white font-semibold shrink-0">

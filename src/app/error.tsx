@@ -22,7 +22,9 @@ export default function Error({
       <div className="w-48 h-px bg-border" />
 
       <div className="flex flex-col items-center gap-2">
-        <p className="text-6xl font-extrabold tracking-tight text-foreground">500</p>
+        <p className="text-6xl font-extrabold tracking-tight text-foreground">
+          500
+        </p>
         <p className="text-[10px] tracking-[0.25em] text-muted-foreground uppercase">
           Something went wrong
         </p>
@@ -38,6 +40,7 @@ export default function Error({
         >
           Try again
         </button>
+
         <a
           href="/"
           className="px-6 py-2 rounded-full border border-border text-sm text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"

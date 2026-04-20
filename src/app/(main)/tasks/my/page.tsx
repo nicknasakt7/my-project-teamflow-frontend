@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { Card, CardContent } from '@/components/ui/card';
 import { CalendarDays, ChevronLeft, ChevronRight, Plus, Search, SquareCheck, Trash2 } from 'lucide-react';
 import { useUpdateTaskStatus } from '@/lib/api/task/hooks/useUpdateTaskStatus';
 import type { Task, TaskPriority, TaskStatus } from '@/lib/api/task/task.type';
@@ -65,49 +66,53 @@ function PersonalTaskCard({ task, onDelete }: { task: Task; onDelete: (id: strin
 
   return (
     <>
-      <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between hover:shadow-md transition-all">
-        <div className="flex items-start gap-3 flex-1 min-w-0">
-          <SquareCheck className="size-5 mt-0.5 shrink-0 text-muted-foreground" />
-          <div className="flex flex-col gap-1 min-w-0">
-            <p className="font-semibold text-sm truncate">{task.title}</p>
-            {task.description && (
-              <p className="text-xs text-muted-foreground truncate">{task.description}</p>
-            )}
-            <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
+      <Card className="border-secondary hover:shadow-lg hover:-translate-y-1 transition">
+        <CardContent className="flex items-start justify-between">
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-2 items-center">
+                <SquareCheck className="size-6 shrink-0" />
+                <h3 className="font-medium text-xl">{task.title}</h3>
+              </div>
+              {task.description && (
+                <p className="text-md text-muted-foreground line-clamp-2">{task.description}</p>
+              )}
+            </div>
+            <div className="flex items-center gap-3 text-md text-muted-foreground flex-wrap">
               {task.dueDate && (
-                <span className="flex items-center gap-1">
-                  <CalendarDays className="size-3" />
+                <div className="flex items-center gap-1">
+                  <CalendarDays className="size-4" />
                   {new Date(task.dueDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
-                </span>
+                </div>
               )}
               <span className={priorityStyles[task.priority]}>• {task.priority}</span>
             </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2 shrink-0 ml-3">
-          <select
-            value={task.status}
-            disabled={isPending || task.status === 'OVERDUE'}
-            onChange={e => updateStatus(e.target.value as TaskStatus)}
-            className={`px-2.5 py-1 rounded-full text-xs font-semibold border transition-opacity disabled:opacity-70 ${task.status === 'OVERDUE' ? 'cursor-not-allowed' : 'cursor-pointer'} ${statusSelectStyles[task.status]}`}
-          >
-            {(Object.keys(statusLabelMap) as TaskStatus[])
-              .filter(s => s !== 'OVERDUE')
-              .map(s => (
-                <option key={s} value={s}>{statusLabelMap[s]}</option>
-              ))}
-            {task.status === 'OVERDUE' && (
-              <option value="OVERDUE">Overdue</option>
-            )}
-          </select>
-          <button
-            onClick={() => setConfirmDelete(true)}
-            className="p-1.5 rounded-lg hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
-          >
-            <Trash2 className="size-4" />
-          </button>
-        </div>
-      </div>
+          <div className="flex items-center gap-2 shrink-0 ml-3">
+            <select
+              value={task.status}
+              disabled={isPending || task.status === 'OVERDUE'}
+              onChange={e => updateStatus(e.target.value as TaskStatus)}
+              className={`px-3 py-1 rounded-full text-sm font-semibold border transition-opacity disabled:opacity-70 ${task.status === 'OVERDUE' ? 'cursor-not-allowed' : 'cursor-pointer'} ${statusSelectStyles[task.status]}`}
+            >
+              {(Object.keys(statusLabelMap) as TaskStatus[])
+                .filter(s => s !== 'OVERDUE')
+                .map(s => (
+                  <option key={s} value={s}>{statusLabelMap[s]}</option>
+                ))}
+              {task.status === 'OVERDUE' && (
+                <option value="OVERDUE">Overdue</option>
+              )}
+            </select>
+            <button
+              onClick={() => setConfirmDelete(true)}
+              className="p-1.5 rounded-lg hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
+            >
+              <Trash2 className="size-5" />
+            </button>
+          </div>
+        </CardContent>
+      </Card>
 
       <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
         <AlertDialogContent>

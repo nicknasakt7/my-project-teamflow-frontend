@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useMyTasks } from '@/lib/api/task/hooks/useMyTasks';
-import AssignedTaskCard from './assigned-task-card';
+import { useAdminTasks } from '@/lib/api/task/hooks/useAdminTasks';
+import AssignedTaskCard from '@/components/features/tasks/assigned-task-card';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { TaskStatus } from '@/lib/api/task/task.type';
@@ -21,23 +20,13 @@ const statusOptions: { label: string; value: TaskStatus | '' }[] = [
 
 const LIMIT = 10;
 
-export default function AssignedTaskList() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [page, setPage] = useState(() => {
-    const p = Number(searchParams.get('page'));
-    return p > 0 ? p : 1;
-  });
+export default function AdminAllTasksPage() {
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState<TaskStatus | ''>('');
   const debouncedSearch = useDebounce(search, 500);
 
-  const handlePageChange = (p: number) => {
-    setPage(p);
-    router.replace(`/tasks?page=${p}`, { scroll: false });
-  };
-
-  const { data, isLoading } = useMyTasks({
+  const { data, isLoading } = useAdminTasks({
     page,
     limit: LIMIT,
     search: debouncedSearch || undefined,
@@ -50,14 +39,13 @@ export default function AssignedTaskList() {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Filters */}
       <div className="flex gap-4 items-center bg-card/80 border px-8 py-4 rounded-lg flex-wrap">
-        <SearchInput onChange={val => { setSearch(val); handlePageChange(1); }} />
+        <SearchInput onChange={val => { setSearch(val); setPage(1); }} />
         <div className="flex gap-2 flex-wrap">
           {statusOptions.map(opt => (
             <button
               key={opt.value}
-              onClick={() => { setStatus(opt.value as TaskStatus | ''); handlePageChange(1); }}
+              onClick={() => { setStatus(opt.value as TaskStatus | ''); setPage(1); }}
               className={`px-3 py-1 rounded-full text-sm border transition ${
                 status === opt.value
                   ? 'bg-primary text-primary-foreground border-primary'
@@ -70,31 +58,28 @@ export default function AssignedTaskList() {
         </div>
       </div>
 
-      {/* Count */}
       <p className="text-sm text-muted-foreground">
         Showing <span className="font-medium text-foreground">{tasks.length}</span> of{' '}
         <span className="font-medium text-foreground">{total}</span> tasks
       </p>
 
-      {/* List */}
       <div className="border-2 px-4 py-6 rounded-lg flex flex-col gap-4 min-h-40">
         {isLoading ? (
           <p className="text-muted-foreground text-center py-10">Loading...</p>
         ) : tasks.length === 0 ? (
-          <p className="text-muted-foreground text-center py-10">No tasks assigned to you</p>
+          <p className="text-muted-foreground text-center py-10">No tasks found</p>
         ) : (
-          tasks.map(task => <AssignedTaskCard key={task.id} {...task} page={page} />)
+          tasks.map(task => <AssignedTaskCard key={task.id} {...task} />)
         )}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-end gap-3">
-          <Button variant="outline" size="icon" onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+          <Button variant="outline" size="icon" onClick={() => setPage(p => p - 1)} disabled={page === 1}>
             <ChevronLeft className="size-4" />
           </Button>
           <span className="text-sm">Page {page} / {totalPages}</span>
-          <Button variant="outline" size="icon" onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
+          <Button variant="outline" size="icon" onClick={() => setPage(p => p + 1)} disabled={page === totalPages}>
             <ChevronRight className="size-4" />
           </Button>
         </div>
