@@ -3,8 +3,18 @@ import '@/lib/config/env.validation';
 
 const nextConfig: NextConfig = {
   /* config options here */
+  //   images: {
+  //     domains: ['res.cloudinary.com'],
+  //   },
+  // };
   images: {
-    domains: ['res.cloudinary.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '**',
+      },
+    ],
   },
 };
 
