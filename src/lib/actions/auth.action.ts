@@ -8,7 +8,6 @@ import {
 } from '../schemas/auth.schema';
 import { authService } from '../api/auth/auth.service';
 import { formatActionError } from './action.util';
-import { redirect } from 'next/navigation';
 import { signIn, signOut } from '../auth/auth';
 
 export const registerAdmin = async (
@@ -35,15 +34,11 @@ export const createMember = async (
 
 export const login = async (input: LoginInput): Promise<ActionResult> => {
   try {
-    const res = signIn('credentials', { ...input, redirect: false });
-    if (!res || (await res).error) {
-      return { success: false, code: 'INVALID_CREDENTIALS' };
-    }
+    await signIn('credentials', { ...input, redirect: false });
+    return { success: true };
   } catch (error) {
-    void error;
     return { success: false, code: 'INVALID_CREDENTIALS' };
   }
-  redirect('/projects');
 };
 
 export const logout = async (): Promise<void> => {

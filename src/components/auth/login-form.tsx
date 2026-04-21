@@ -9,6 +9,7 @@ import { Input } from '../ui/input';
 import { Controller, useForm } from 'react-hook-form';
 import { LoginInput, loginSchema } from '@/lib/schemas/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
 import { login } from '@/lib/actions/auth.action';
@@ -35,28 +36,27 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
+  const handleLoginResult = async (loginFn: () => Promise<{ success: boolean }>) => {
+    const res = await loginFn();
+    if (!res.success) {
+      setError('root', {
+        message: 'The email or password you entered is incorrect',
+      });
+    } else {
+      router.refresh();
+      router.push('/projects');
+    }
+  };
+
   const onSubmit = (data: LoginInput) => {
-    startTransition(async () => {
-      const res = await login(data);
-      if (!res.success) {
-        setError('root', {
-          message: 'The email or password you entered is incorrect',
-        });
-      }
-    });
+    startTransition(() => handleLoginResult(() => login(data)));
   };
 
   const handleQuickLogin = (email: string, password: string) => {
-    startTransition(async () => {
-      const res = await login({ email, password });
-      if (!res.success) {
-        setError('root', {
-          message: 'The email or password you entered is incorrect',
-        });
-      }
-    });
+    startTransition(() => handleLoginResult(() => login({ email, password })));
   };
 
   return (

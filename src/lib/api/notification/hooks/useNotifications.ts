@@ -5,26 +5,32 @@ import { useSession } from 'next-auth/react';
 import { notificationClientService } from '../notification.client-service';
 
 export const useNotifications = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const token = session?.user?.accessToken;
 
   return useQuery({
-    queryKey: ['notifications'],
+    queryKey: ['notifications', session?.user?.id],
     queryFn: () => notificationClientService.getMyNotifications(token!),
-    enabled: !!token,
-    refetchInterval: 30_000,
+    enabled: status === 'authenticated' && !!token,
+    refetchInterval: 10_000,
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   });
 };
 
 export const useUnreadCount = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const token = session?.user?.accessToken;
 
   return useQuery({
-    queryKey: ['notifications-unread-count'],
+    queryKey: ['notifications-unread-count', session?.user?.id],
     queryFn: () => notificationClientService.getUnreadCount(token!),
-    enabled: !!token,
-    refetchInterval: 30_000,
+    enabled: status === 'authenticated' && !!token,
+    refetchInterval: 10_000,
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   });
 };
 

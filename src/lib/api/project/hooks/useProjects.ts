@@ -6,14 +6,15 @@ import { projectClientService } from '../project.client-service';
 import type { GetProjectsParams } from '../project.type';
 
 export const useProjects = (params: GetProjectsParams = {}) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   return useQuery({
-    queryKey: ['projects', params.page, params.limit, params.search, params.status, params.createdBy],
+    queryKey: ['projects', session?.user?.id, params.page, params.limit, params.search, params.status, params.createdBy],
     queryFn: async () => {
       const res = await projectClientService.getProjects(params, session?.user?.accessToken!);
       return res;
     },
-    enabled: !!session?.user?.accessToken,
+    enabled: status === 'authenticated' && !!session?.user?.accessToken,
+    staleTime: 0,
   });
 };
