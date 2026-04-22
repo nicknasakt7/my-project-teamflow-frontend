@@ -10,6 +10,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { LoginInput, loginSchema } from '@/lib/schemas/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useTransition } from 'react';
 
 import { login } from '@/lib/actions/auth.action';
@@ -37,6 +38,7 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
+  const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
   const handleLoginResult = async (loginFn: () => Promise<{ success: boolean }>) => {
@@ -46,7 +48,7 @@ export default function LoginForm() {
         message: 'The email or password you entered is incorrect',
       });
     } else {
-      router.refresh();
+      await update();
       router.push('/projects');
     }
   };
