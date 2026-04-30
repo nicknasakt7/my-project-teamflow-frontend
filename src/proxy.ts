@@ -57,7 +57,7 @@ export const proxy = auth(req => {
   ];
   const isKnownRoute = allKnownRoutes.some(route => pathname.startsWith(route));
 
-  // ถ้าไม่ใช่ route ที่รู้จัก → ให้ Next.js render 404 เอง
+  // ถ้าไม่ใช่ route ที่รู้จัก  ให้ Next.js render 404 เอง
   if (!isKnownRoute) {
     return NextResponse.next();
   }

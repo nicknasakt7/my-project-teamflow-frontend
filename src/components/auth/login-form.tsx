@@ -10,16 +10,34 @@ import { Controller, useForm } from 'react-hook-form';
 import { LoginInput, loginSchema } from '@/lib/schemas/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useTransition } from 'react';
 
-import { login } from '@/lib/actions/auth.action';
+// import { login } from '@/lib/actions/auth.action';
 import { Alert, AlertTitle } from '../ui/alert';
 
 const DEMO_ACCOUNTS = [
-  { label: 'Super Admin', email: 'superadmin@gmail.com', password: 'admin123', style: 'bg-violet-100 text-violet-700 hover:bg-violet-200 dark:bg-violet-900/30 dark:text-violet-300' },
-  { label: 'Admin', email: 'b@mail.com', password: '654321', style: 'bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300' },
-  { label: 'Member', email: 'noah.backend@mail.com', password: '123456', style: 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300' },
+  {
+    label: 'Super Admin',
+    email: 'superadmin@gmail.com',
+    password: 'admin123',
+    style:
+      'bg-violet-100 text-violet-700 hover:bg-violet-200 dark:bg-violet-900/30 dark:text-violet-300',
+  },
+  {
+    label: 'Admin',
+    email: 'b@mail.com',
+    password: '654321',
+    style:
+      'bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300',
+  },
+  {
+    label: 'Member',
+    email: 'noah.backend@mail.com',
+    password: '123456',
+    style:
+      'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300',
+  },
 ];
 
 export default function LoginForm() {
@@ -27,7 +45,6 @@ export default function LoginForm() {
     handleSubmit,
     control,
     setError,
-    setValue,
     formState: { errors },
   } = useForm<LoginInput>({
     defaultValues: {
@@ -38,27 +55,28 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
-  const { update } = useSession();
+  // const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
-  const handleLoginResult = async (loginFn: () => Promise<{ success: boolean }>) => {
-    const res = await loginFn();
-    if (!res.success) {
+  const handleLoginResult = async (loginFn: () => Promise<void>) => {
+    try {
+      await loginFn();
+      router.push('/projects');
+    } catch {
       setError('root', {
         message: 'The email or password you entered is incorrect',
       });
-    } else {
-      await update();
-      router.push('/projects');
     }
   };
 
   const onSubmit = (data: LoginInput) => {
-    startTransition(() => handleLoginResult(() => login(data)));
+    startTransition(() => handleLoginResult(() => signIn('credentials', data)));
   };
 
   const handleQuickLogin = (email: string, password: string) => {
-    startTransition(() => handleLoginResult(() => login({ email, password })));
+    startTransition(() =>
+      handleLoginResult(() => signIn('credentials', { email, password })),
+    );
   };
 
   return (
@@ -143,7 +161,10 @@ export default function LoginForm() {
 
       {/* Forgot password */}
       <div className="flex justify-end text-md px-4 -mt-5">
-        <Link href="/forgot-password" className="text-primary hover:underline text-sm">
+        <Link
+          href="/forgot-password"
+          className="text-primary hover:underline text-sm"
+        >
           Forgot password?
         </Link>
       </div>
@@ -155,7 +176,9 @@ export default function LoginForm() {
             <span className="w-full border-t" />
           </div>
           <div className="relative flex justify-center text-xs">
-            <span className="bg-card px-2 text-muted-foreground">Try a demo account</span>
+            <span className="bg-card px-2 text-muted-foreground">
+              Try a demo account
+            </span>
           </div>
         </div>
         <div className="flex flex-col gap-2">
@@ -167,7 +190,11 @@ export default function LoginForm() {
               onClick={() => handleQuickLogin(account.email, account.password)}
               className={`w-full rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 ${account.style}`}
             >
-              {isPending ? <Loader className="animate-spin mx-auto size-4" /> : `Try as ${account.label}`}
+              {isPending ? (
+                <Loader className="animate-spin mx-auto size-4" />
+              ) : (
+                `Try as ${account.label}`
+              )}
             </button>
           ))}
         </div>

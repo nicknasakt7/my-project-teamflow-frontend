@@ -36,7 +36,7 @@ export const login = async (input: LoginInput): Promise<ActionResult> => {
   try {
     await signIn('credentials', { ...input, redirect: false });
     return { success: true };
-  } catch (error) {
+  } catch {
     return { success: false, code: 'INVALID_CREDENTIALS' };
   }
 };
@@ -54,7 +54,10 @@ export const forgotPassword = async (email: string): Promise<ActionResult> => {
   }
 };
 
-export const resetPassword = async (token: string, newPassword: string): Promise<ActionResult> => {
+export const resetPassword = async (
+  token: string,
+  newPassword: string,
+): Promise<ActionResult> => {
   try {
     await authService.resetPassword(token, newPassword);
     return { success: true };
