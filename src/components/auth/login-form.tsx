@@ -58,25 +58,30 @@ export default function LoginForm() {
   // const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
-  const handleLoginResult = async (loginFn: () => Promise<void>) => {
-    try {
-      await loginFn();
-      router.push('/projects');
-    } catch {
-      setError('root', {
-        message: 'The email or password you entered is incorrect',
-      });
-    }
-  };
-
   const onSubmit = (data: LoginInput) => {
-    startTransition(() => handleLoginResult(() => signIn('credentials', data)));
+    startTransition(async () => {
+      const res = await signIn('credentials', { ...data, redirect: false });
+      if (!res?.ok) {
+        setError('root', {
+          message: 'The email or password you entered is incorrect',
+        });
+        return;
+      }
+      router.push('/projects');
+    });
   };
 
   const handleQuickLogin = (email: string, password: string) => {
-    startTransition(() =>
-      handleLoginResult(() => signIn('credentials', { email, password })),
-    );
+    startTransition(async () => {
+      const res = await signIn('credentials', { email, password, redirect: false });
+      if (!res?.ok) {
+        setError('root', {
+          message: 'The email or password you entered is incorrect',
+        });
+        return;
+      }
+      router.push('/projects');
+    });
   };
 
   return (
