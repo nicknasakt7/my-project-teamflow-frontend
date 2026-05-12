@@ -12,6 +12,7 @@ type DatePickerInputProps = {
   value: Date | undefined;
   onValueChange: (...event: unknown[]) => void;
   placeholder?: string;
+  toDate?: Date;
 };
 export default function DatePickerInput({
   id,
@@ -19,6 +20,7 @@ export default function DatePickerInput({
   value,
   onValueChange,
   placeholder = 'Select Date Of Birth',
+  toDate,
 }: DatePickerInputProps) {
   const [open, setOpen] = useState(false);
 
@@ -47,6 +49,7 @@ export default function DatePickerInput({
           mode="single"
           captionLayout="dropdown"
           selected={value}
+          toDate={toDate}
           onSelect={date => {
             onValueChange(date);
             setOpen(false);

@@ -13,8 +13,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Credentials({
       async authorize(credentials) {
-        const { user, accessToken } = await authService.login(credentials);
-        return { ...user, accessToken };
+        try {
+          const { user, accessToken } = await authService.login(credentials);
+          return { ...user, accessToken };
+        } catch {
+          return null;
+        }
       },
     }),
   ],

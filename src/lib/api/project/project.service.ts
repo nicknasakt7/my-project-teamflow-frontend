@@ -6,11 +6,12 @@ type CreateProjectBody = {
   description: string;
   dueDate: string;
   createdById: string;
-  createdAt: string;
-  updatedAt: string;
 };
 
 const createProject = (body: CreateProjectBody) =>
   api.post<Project>('/projects', body);
 
-export const projectService = { createProject };
+const getProjectDetail = (projectId: string) =>
+  api.get<Project>(`/projects/${projectId}`);
+
+export const projectService = { createProject, getProjectDetail };

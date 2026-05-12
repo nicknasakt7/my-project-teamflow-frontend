@@ -14,7 +14,7 @@ import { signIn } from 'next-auth/react';
 import { useTransition } from 'react';
 
 // import { login } from '@/lib/actions/auth.action';
-import { Alert, AlertTitle } from '../ui/alert';
+import { Alert, AlertDescription } from '../ui/alert';
 
 const DEMO_ACCOUNTS = [
   {
@@ -60,40 +60,45 @@ export default function LoginForm() {
 
   const onSubmit = (data: LoginInput) => {
     startTransition(async () => {
-      const res = await signIn('credentials', { ...data, redirect: false });
-      if (!res?.ok) {
+      try {
+        const res = await signIn('credentials', { ...data, redirect: false });
+        if (!res || res.error) {
+          setError('root', {
+            message: 'The email or password you entered is incorrect',
+          });
+          return;
+        }
+        router.push('/projects');
+      } catch {
         setError('root', {
           message: 'The email or password you entered is incorrect',
         });
-        return;
       }
-      router.push('/projects');
     });
   };
 
   const handleQuickLogin = (email: string, password: string) => {
     startTransition(async () => {
-      const res = await signIn('credentials', { email, password, redirect: false });
-      if (!res?.ok) {
+      try {
+        const res = await signIn('credentials', { email, password, redirect: false });
+        if (!res || res.error) {
+          setError('root', {
+            message: 'The email or password you entered is incorrect',
+          });
+          return;
+        }
+        router.push('/projects');
+      } catch {
         setError('root', {
           message: 'The email or password you entered is incorrect',
         });
-        return;
       }
-      router.push('/projects');
     });
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {errors.root && (
-          <Alert>
-            <AlertTitle className="text-destructive text-lg">
-              {errors.root.message}
-            </AlertTitle>
-          </Alert>
-        )}
         <FieldGroup className="gap-4">
           {/* Email */}
           <Controller
@@ -173,6 +178,16 @@ export default function LoginForm() {
           Forgot password?
         </Link>
       </div>
+
+      {errors.root && (
+        <div className="px-4 mt-2">
+          <Alert variant="destructive">
+            <AlertDescription>
+              {errors.root.message}
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
 
       {/* Quick login */}
       <div className="px-4 pb-3 mt-1">

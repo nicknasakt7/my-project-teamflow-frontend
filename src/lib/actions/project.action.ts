@@ -13,15 +13,12 @@ export const createProject = async (
   const session = await auth();
   if (!session?.user?.id) redirect('/login');
 
-  const now = new Date().toISOString();
   try {
     const project = await projectService.createProject({
       title: input.title,
       description: input.description,
       dueDate: input.dueDate.toISOString(),
       createdById: session.user.id,
-      createdAt: now,
-      updatedAt: now,
     });
     return { success: true, data: { id: project.id } };
   } catch (error) {

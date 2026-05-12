@@ -1,4 +1,5 @@
 import CreateTaskForm from '@/components/features/tasks/task-form';
+import { projectService } from '@/lib/api/project/project.service';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
@@ -6,6 +7,7 @@ type Params = { projectId: string };
 
 export default async function CreateTask({ params }: { params: Promise<Params> }) {
   const { projectId } = await params;
+  const project = await projectService.getProjectDetail(projectId);
 
   return (
     <div className="p-6 space-y-6">
@@ -19,7 +21,7 @@ export default async function CreateTask({ params }: { params: Promise<Params> }
         </Link>
       </div>
 
-      <CreateTaskForm projectId={projectId} />
+      <CreateTaskForm projectId={projectId} projectDueDate={project?.dueDate ?? null} />
     </div>
   );
 }

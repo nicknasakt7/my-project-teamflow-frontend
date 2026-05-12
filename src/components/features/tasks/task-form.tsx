@@ -20,9 +20,12 @@ import { createTask } from '@/lib/actions/task.action';
 
 type CreateTaskFormProps = {
   projectId: string;
+  projectDueDate?: string | null;
 };
 
-export default function CreateTaskForm({ projectId }: CreateTaskFormProps) {
+export default function CreateTaskForm({ projectId, projectDueDate }: CreateTaskFormProps) {
+  const maxDate = projectDueDate ? new Date(projectDueDate) : undefined;
+
   const { handleSubmit, control } = useForm<CreateTaskInput>({
     defaultValues: {
       title: '',
@@ -31,7 +34,7 @@ export default function CreateTaskForm({ projectId }: CreateTaskFormProps) {
       dueDate: undefined,
       assignToId: '',
     },
-    resolver: zodResolver(createTaskSchema),
+    resolver: zodResolver(createTaskSchema(maxDate)),
   });
 
   const [isPending, startTransition] = useTransition();
@@ -128,6 +131,7 @@ export default function CreateTaskForm({ projectId }: CreateTaskFormProps) {
                     isValid={!fieldState.invalid}
                     onValueChange={field.onChange}
                     placeholder="Select due date"
+                    toDate={maxDate}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
