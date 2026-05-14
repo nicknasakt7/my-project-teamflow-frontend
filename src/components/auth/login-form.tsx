@@ -12,8 +12,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useTransition } from 'react';
-
-// import { login } from '@/lib/actions/auth.action';
 import { Alert, AlertDescription } from '../ui/alert';
 
 const DEMO_ACCOUNTS = [
@@ -55,24 +53,32 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
-  // const { update } = useSession();
+
   const [isPending, startTransition] = useTransition();
+
+  const setRootError = (message: string) => setError('root', { message });
+
+  const performLogin = async (credentials: {
+    email: string;
+    password: string;
+  }) => {
+    const res = await signIn('credentials', {
+      ...credentials,
+      redirect: false,
+    });
+    if (!res || res.error) {
+      setRootError('The email or password you entered is incorrect');
+      return;
+    }
+    router.push('/dashboard');
+  };
 
   const onSubmit = (data: LoginInput) => {
     startTransition(async () => {
       try {
-        const res = await signIn('credentials', { ...data, redirect: false });
-        if (!res || res.error) {
-          setError('root', {
-            message: 'The email or password you entered is incorrect',
-          });
-          return;
-        }
-        router.push('/projects');
+        await performLogin(data);
       } catch {
-        setError('root', {
-          message: 'The email or password you entered is incorrect',
-        });
+        setRootError('Something went wrong. Please try again');
       }
     });
   };
@@ -80,18 +86,9 @@ export default function LoginForm() {
   const handleQuickLogin = (email: string, password: string) => {
     startTransition(async () => {
       try {
-        const res = await signIn('credentials', { email, password, redirect: false });
-        if (!res || res.error) {
-          setError('root', {
-            message: 'The email or password you entered is incorrect',
-          });
-          return;
-        }
-        router.push('/projects');
+        await performLogin({ email, password });
       } catch {
-        setError('root', {
-          message: 'The email or password you entered is incorrect',
-        });
+        setRootError('Something went wrong. Please try again');
       }
     });
   };
@@ -182,9 +179,7 @@ export default function LoginForm() {
       {errors.root && (
         <div className="px-4 mt-2">
           <Alert variant="destructive">
-            <AlertDescription>
-              {errors.root.message}
-            </AlertDescription>
+            <AlertDescription>{errors.root.message}</AlertDescription>
           </Alert>
         </div>
       )}

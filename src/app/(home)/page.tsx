@@ -9,7 +9,7 @@ import { logout } from '@/lib/actions/auth.action';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: 'TeamFlow — Manage Projects with Precision',
+  title: 'TeamFlow | Manage Projects with Precision',
 };
 
 export default async function HomePage() {
@@ -33,8 +33,18 @@ export default async function HomePage() {
                 Go to App
               </Button>
             </Link>
-            <form action={async () => { 'use server'; await logout(); }}>
-              <Button type="submit" variant="ghost" size="sm" className="gap-2 text-muted-foreground">
+            <form
+              action={async () => {
+                'use server';
+                await logout();
+              }}
+            >
+              <Button
+                type="submit"
+                variant="ghost"
+                size="sm"
+                className="gap-2 text-muted-foreground"
+              >
                 <LogOut className="size-4" />
                 Logout
               </Button>
